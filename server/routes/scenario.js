@@ -1,80 +1,90 @@
 import express from 'express'
-import * as dbo from "/Users/charlierome/CS-545-Project-v2/server/CS-545-Proj-v2/server/db/conn.js"
+import {getDb, connectToServer} from "/Users/charlierome/CS-545-Project-v2/server/CS-545-Proj-v2/server/db/conn.js"
 import { ObjectId } from 'mongodb';
 const scenarioRoutes = express.Router();
 
-scenarioRoutes.route("/").get(function(req,res){
-  let db_connect = dbo.getDb("CS-545-Project");
-  db_connect
-   .collection("Scenarios")
-   .find({})
-   .toArray(function (err, result) {
-     if (err) throw err;
-     res.json(result);
-   });
+scenarioRoutes.route("/").get(async function (req, res) {
+  try {
+    let db_connect = getDb();
+    const result = await db_connect.collection("Scenarios").find({}).toArray();
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-scenarioRoutes.route("/scenario/:id").get(function (req, res) {
-  let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  db_connect
-    .collection("Scenarios")
-    .findOne(myquery, function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
- });
 
- scenarioRoutes.route("/scenario/add").post(function (req, response) {
-  let db_connect = dbo.getDb();
-  let myobj = {
-    userId: req.body.userId,
-    title: req.body.title,
-    desciption: req.body.desciption,
-    acceptanceCriteria: req.body.acceptanceCriteria,
-    teamName: teamName,
-    bugs : [],
-    changeRequests : [],
-    features: [],
-    userStories: []
-  };
-  console.log(myobj)
-  db_connect.collection("Scenarios").insertOne(myobj, function (err, res) {
-    if (err) throw err;
-    response.json(res);
-  });
- });
+scenarioRoutes.route("/scenario/:id").get(async function (req, res) {
+  try {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: new ObjectId(req.params.id) };
+    const result = await db_connect.collection("Scenarios").findOne(myquery);
+    res.json(result);
+  } catch (err) {
+    throw err;
+  }
+});
 
- scenarioRoutes.route("/edit/:id").post(function (req, response) {
-  let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  let newvalues = {
-    $set: {
+scenarioRoutes.route("/scenario/add").post(async function (req, response) {
+  try {
+    let db_connect = getDb();
+    let myobj = {
       userId: req.body.userId,
       title: req.body.title,
-      desciption: req.body.desciption,
+      description: req.body.description,
       acceptanceCriteria: req.body.acceptanceCriteria,
-      teamName,
-    },
-  };
-  db_connect
-    .collection("Scenarios")
-    .updateOne(myquery, newvalues, function (err, res) {
-      if (err) throw err;
-      console.log("1 document updated");
-      response.json(res);
-    });
- });
+      teamName: req.body.teamName,
+      bugs: [],
+      changeRequests: [],
+      features: [],
+      userStories: []
+    };
 
- scenarioRoutes.route("/delete/:id").delete((req, response) => {
-  let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  db_connect.collection("Scenarios").deleteOne(myquery, function (err, obj) {
-    if (err) throw err;
+    console.log(myobj);
+
+    const res = await db_connect.collection("Scenarios").insertOne(myobj);
+    response.json(res);
+  } catch (err) {
+    console.error(err);
+    return response.status(500).json({ error: "Error occurred while adding the scenario." });
+  }
+});
+
+scenarioRoutes.route("/edit/:id").post(async function (req, response) {
+  try {
+    let db_connect = getDb();
+    let myquery = { _id: new ObjectId(req.params.id) };
+    let newvalues = {
+      $set: {
+        userId: req.body.userId,
+        title: req.body.title,
+        description: req.body.description,
+        acceptanceCriteria: req.body.acceptanceCriteria,
+        teamName: req.body.teamName,
+      },
+    };
+
+    const res = await db_connect.collection("Scenarios").updateOne(myquery, newvalues);
+    console.log("1 document updated");
+    response.json(res);
+  } catch (err) {
+    throw err;
+  }
+});
+
+scenarioRoutes.route("/delete/:id").delete(async (req, response) => {
+  try {
+    let db_connect = getDb();
+    let myquery = { _id: new ObjectId(req.params.id) };
+    const obj = await db_connect.collection("Scenarios").deleteOne(myquery);
     console.log("1 document deleted");
     response.json(obj);
-  });
- });
+  } catch (err) {
+    throw err;
+  }
+});
+
   
  export default scenarioRoutes;
 

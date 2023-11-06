@@ -21,7 +21,7 @@ export default function Create() {
    e.preventDefault();
     // When a post request is sent to the create url, we'll add a new record to the database.
    const newScenario = { ...form };
-    await fetch("http://localhost:3001/scenario/add", {
+    await fetch("http://localhost:3000/scenario/add", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",

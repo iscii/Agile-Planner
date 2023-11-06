@@ -28,7 +28,7 @@ export default function ScenarioList() {
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await fetch(`http://localhost:3001/scenario/`);
+      const response = await fetch(`http://localhost:3000/`);
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         window.alert(message);
@@ -43,7 +43,7 @@ export default function ScenarioList() {
 
   // This method will delete a scenario
   async function deleteScenario(id) {
-    await fetch(`http://localhost:3001/${id}`, {
+    await fetch(`http://localhost:3000/${id}`, {
       method: "DELETE"
     });
 
