@@ -1,5 +1,5 @@
 import express from 'express'
-import {getDb, connectToServer} from "/Users/charlierome/CS-545-Project-v2/server/CS-545-Proj-v2/server/db/conn.js"
+import {getDb, connectToServer} from "../db/conn.js"
 import { ObjectId } from 'mongodb';
 const scenarioRoutes = express.Router();
 
