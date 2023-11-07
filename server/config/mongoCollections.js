@@ -15,4 +15,4 @@ const getCollectionFn = (collection) => {
   };
 };
 
-export const scenarios = getCollectionFn('scenarios');
+export const scenarios = getCollectionFn('Scenarios');

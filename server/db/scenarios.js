@@ -1,4 +1,4 @@
-import  {scenarios}  from "./config/mongoCollections.js";
+import  {scenarios}  from "../config/mongoCollections.js";
 // import { features } from "../../config/mongoCollections";
 // import { userStories } from "../../config/mongoCollections";
 import { ObjectId } from "mongodb"

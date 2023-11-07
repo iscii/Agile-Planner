@@ -1,12 +1,12 @@
 import express from 'express'
-import {getDb, connectToServer} from "../db/conn.js"
+import { scenarios } from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 const scenarioRoutes = express.Router();
 
 scenarioRoutes.route("/").get(async function (req, res) {
   try {
-    let db_connect = getDb();
-    const result = await db_connect.collection("Scenarios").find({}).toArray();
+    let scenarioCollection = await scenarios();
+    const result = await scenarioCollection.find({}).toArray();
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -17,9 +17,11 @@ scenarioRoutes.route("/").get(async function (req, res) {
 
 scenarioRoutes.route("/scenario/:id").get(async function (req, res) {
   try {
-    let db_connect = dbo.getDb();
     let myquery = { _id: new ObjectId(req.params.id) };
-    const result = await db_connect.collection("Scenarios").findOne(myquery);
+
+    let scenarioCollection = await scenarios();
+    const result = await scenarioCollection.findOne(myquery);
+
     res.json(result);
   } catch (err) {
     throw err;
@@ -28,7 +30,6 @@ scenarioRoutes.route("/scenario/:id").get(async function (req, res) {
 
 scenarioRoutes.route("/scenario/add").post(async function (req, response) {
   try {
-    let db_connect = getDb();
     let myobj = {
       userId: req.body.userId,
       title: req.body.title,
@@ -42,8 +43,8 @@ scenarioRoutes.route("/scenario/add").post(async function (req, response) {
     };
 
     console.log(myobj);
-
-    const res = await db_connect.collection("Scenarios").insertOne(myobj);
+    let scenarioCollection = await scenarios();
+    const res = await scenarioCollection.insertOne(myobj);
     response.json(res);
   } catch (err) {
     console.error(err);
@@ -53,7 +54,6 @@ scenarioRoutes.route("/scenario/add").post(async function (req, response) {
 
 scenarioRoutes.route("/edit/:id").post(async function (req, response) {
   try {
-    let db_connect = getDb();
     let myquery = { _id: new ObjectId(req.params.id) };
     let newvalues = {
       $set: {
@@ -64,8 +64,9 @@ scenarioRoutes.route("/edit/:id").post(async function (req, response) {
         teamName: req.body.teamName,
       },
     };
-
-    const res = await db_connect.collection("Scenarios").updateOne(myquery, newvalues);
+    
+    let scenarioCollection = await scenarios();
+    const res = await scenarioCollection.updateOne(myquery, newvalues);
     console.log("1 document updated");
     response.json(res);
   } catch (err) {
@@ -75,9 +76,10 @@ scenarioRoutes.route("/edit/:id").post(async function (req, response) {
 
 scenarioRoutes.route("/delete/:id").delete(async (req, response) => {
   try {
-    let db_connect = getDb();
     let myquery = { _id: new ObjectId(req.params.id) };
-    const obj = await db_connect.collection("Scenarios").deleteOne(myquery);
+    let scenarioCollection = await scenarios();
+
+    const obj = await scenarioCollection.deleteOne(myquery);
     console.log("1 document deleted");
     response.json(obj);
   } catch (err) {
