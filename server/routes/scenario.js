@@ -1,19 +1,20 @@
 import express from 'express'
-import { scenarios } from '../config/mongoCollections.js';
+import { scenarios,users } from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 const scenarioRoutes = express.Router();
+import { createUser, deleteUser } from '../db/users.js';
 
-scenarioRoutes.route("/").get(async function (req, res) {
+scenarioRoutes.route("/scenarios/:userId").get(async function (req, res) {
   try {
+    const userId = req.params.userId; // Get user ID from URL parameters
     let scenarioCollection = await scenarios();
-    const result = await scenarioCollection.find({}).toArray();
+    const result = await scenarioCollection.find({ userId: userId }).toArray(); // Filter scenarios by userId
     res.json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 scenarioRoutes.route("/scenario/:id").get(async function (req, res) {
   try {
@@ -87,6 +88,62 @@ scenarioRoutes.route("/delete/:id").delete(async (req, response) => {
   }
 });
 
-  
+scenarioRoutes.post("/createUser", async (req, res) => {
+  try {
+    const { userName, email, password } = req.body;
+
+    // Check if userName is missing or empty
+    if (!userName) {
+      return res.status(400).json({ error: "Please provide a username." });
+    }
+
+    // Validate the email format using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email address." });
+    }
+
+    // Check if password is missing or empty
+    if (!password) {
+      return res.status(400).json({ error: "Please provide a password." });
+    }
+
+    const result = await createUser(userName, email, password);
+
+    if (result.error) {
+      return res.status(400).json({ error: result.error });
+    }
+
+    res.status(201).json({ userId: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+scenarioRoutes.delete("/deleteUser", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Check if the email is missing or empty
+    if (!email) {
+      return res.status(400).json({ error: "Please provide an email address." });
+    }
+
+    const isDeleted = await deleteUser(email);
+
+    if (isDeleted) {
+      // User was successfully deleted
+      res.status(200).json({ message: "User deleted successfully." });
+    } else {
+      // User with the provided email was not found
+      res.status(404).json({ error: "User with the provided email not found." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
  export default scenarioRoutes;
 
