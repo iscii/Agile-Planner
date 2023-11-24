@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 const Scenario = (props) => (
   <tr>
@@ -13,42 +13,42 @@ const Scenario = (props) => (
       <button
         className="btn btn-link"
         onClick={() => {
-          props.deleteScenario(props.scenario._id);
+          props.deleteScenario(props.scenario._id)
         }}
       >
         Delete
       </button>
     </td>
   </tr>
-);
+)
 
 export default function ScenarioList() {
-  const [scenarios, setScenarios] = useState([]);
+  const [scenarios, setScenarios] = useState([])
 
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await fetch(`http://localhost:3000/`);
+      const response = await fetch(`http://localhost:3000/scenarios/:userId`)
       if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        window.alert(message);
-        return;
+        const message = `An error occurred: ${response.statusText}`
+        window.alert(message)
+        return
       }
-      const scenarios = await response.json();
-      console.log(scenarios);
-      setScenarios(scenarios);
+      const scenarios = await response.json()
+      console.log(scenarios)
+      setScenarios(scenarios)
     }
-    getScenarios();
-  }, [scenarios.length]);
+    getScenarios()
+  }, [scenarios.length])
 
   // This method will delete a scenario
   async function deleteScenario(id) {
     await fetch(`http://localhost:3000/${id}`, {
       method: "DELETE"
-    });
+    })
 
-    const newScenarios = scenarios.filter((el) => el._id !== id);
-    setScenarios(newScenarios);
+    const newScenarios = scenarios.filter((el) => el._id !== id)
+    setScenarios(newScenarios)
   }
 
   // This method will map out the scenarios on the table
@@ -60,8 +60,8 @@ export default function ScenarioList() {
           deleteScenario={() => deleteScenario(scenario._id)}
           key={scenario._id}
         />
-      );
-    });
+      )
+    })
   }
 
   // This following section will display the table with the scenarios.
@@ -82,5 +82,5 @@ export default function ScenarioList() {
         <tbody>{scenarioList()}</tbody>
       </table>
     </div>
-  );
+  )
 }
