@@ -36,6 +36,7 @@ export const create = async(
 }
 
 const getAll = async () => {
+  //Add userID to getAll by userId
   const scenarioCollection = await scenarios();
   const allScnearios = await scenarioCollection.find({}).toArray();
   if (!allScnearios) {
