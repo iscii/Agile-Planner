@@ -269,5 +269,111 @@ export const deleteScenario = async (scenarioID) => {
   return deleteData;
 }
 
+export const getFeaturesByScenario = async(scenarioID) => {
+  try{
+      if (!scenarioID) {
+        throw new Error("Missing scenario ID.");
+      }
+      if (typeof scenarioID !== 'string' || scenarioID.trim() === '') {
+          throw new Error("Invalid scenario ID type.");
+      }
+      if (!ObjectId.isValid(scenarioID)) {
+          throw new Error("Invalid scenario ID.");
+      }
 
+      const scenarioCollection = await scenarios();
+      const scenario = await scenarioCollection.findOne({
+          _id: new ObjectId(scenarioID),
+      });
+
+      if (!scenario) {
+          throw new Error("No scenario with that ID.");
+      }
+      // Return only the features of the found scenario
+    return scenario.features || [];
+    }catch(error){
+      console.log(error);
+    }
+}
+
+export const getBugsByScenario = async(scenarioID) =>{
+  try{
+    if (!scenarioID) {
+      throw new Error("Missing scenario ID.");
+    }
+    if (typeof scenarioID !== 'string' || scenarioID.trim() === '') {
+        throw new Error("Invalid scenario ID type.");
+    }
+    if (!ObjectId.isValid(scenarioID)) {
+        throw new Error("Invalid scenario ID.");
+    }
+
+    const scenarioCollection = await scenarios();
+    const scenario = await scenarioCollection.findOne({
+        _id: new ObjectId(scenarioID),
+    });
+
+    if (!scenario) {
+        throw new Error("No scenario with that ID.");
+    }
+    // Return only the features of the found scenario
+  return scenario.bugs || [];
+  }catch(error){
+    console.log(error);
+  }
+}
+
+export const getCRsByScenario = async(scenarioID) =>{
+    try{
+      if (!scenarioID) {
+        throw new Error("Missing scenario ID.");
+      }
+      if (typeof scenarioID !== 'string' || scenarioID.trim() === '') {
+          throw new Error("Invalid scenario ID type.");
+      }
+      if (!ObjectId.isValid(scenarioID)) {
+          throw new Error("Invalid scenario ID.");
+      }
+
+      const scenarioCollection = await scenarios();
+      const scenario = await scenarioCollection.findOne({
+          _id: new ObjectId(scenarioID),
+      });
+
+      if (!scenario) {
+          throw new Error("No scenario with that ID.");
+      }
+      // Return only the features of the found scenario
+      return scenario.changeRequests || [];
+      }catch(error){
+        console.log(error);
+      }
+}
+
+export const getUserStoriesByScenario = async(scenarioID) =>{
+  try{
+    if (!scenarioID) {
+      throw new Error("Missing scenario ID.");
+    }
+    if (typeof scenarioID !== 'string' || scenarioID.trim() === '') {
+        throw new Error("Invalid scenario ID type.");
+    }
+    if (!ObjectId.isValid(scenarioID)) {
+        throw new Error("Invalid scenario ID.");
+    }
+
+    const scenarioCollection = await scenarios();
+    const scenario = await scenarioCollection.findOne({
+        _id: new ObjectId(scenarioID),
+    });
+
+    if (!scenario) {
+        throw new Error("No scenario with that ID.");
+    }
+    // Return only the features of the found scenario
+    return scenario.userStories || [];
+    }catch(error){
+      console.log(error);
+    }
+}
 

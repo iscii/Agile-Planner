@@ -2,7 +2,8 @@ import express from 'express'
 import { scenarios,users } from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 const scenarioRoutes = express.Router();
-import { createUser, deleteUser } from '../db/users.js';
+import { updateBugs, updateFeatures, changeRequests, updateUserStories, getBugsByScenario, getFeaturesByScenario, getCRsByScenario, getUserStoriesByScenario } from '../db/scenarios.js';
+import { createUser, deleteUser, authenticateUser } from '../db/users.js';
 
 scenarioRoutes.route("/scenarios/:userId").get(async function (req, res) {
   try {
@@ -145,5 +146,113 @@ scenarioRoutes.delete("/deleteUser", async (req, res) => {
   }
 });
 
- export default scenarioRoutes;
+scenarioRoutes.route("/scenario/:id/features").get(async function (req, res) {
+  try {
+    const scenarioId = req.params.id; // Get scenario ID from URL parameters
+    let scenarioCollection = await scenarios();
+    const scenario = await scenarioCollection.findOne({ _id: new ObjectId(scenarioId) });
+
+    if (!scenario) {
+      return res.status(404).json({ error: "Scenario not found" });
+    }
+
+    const features = scenario.features || [];
+    res.json(features);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+scenarioRoutes.post('/updateBugs', async (req, res) => {
+  const { scenarioID, title, description, status, acceptanceCriteria } = req.body;
+  try {
+    const updatedScenario = await updateBugs(scenarioID, title, description, status, acceptanceCriteria);
+    res.json(updatedScenario);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.post('/updateFeatures', async (req, res) => {
+  const { scenarioID, feature, title, acceptanceCriteria, status } = req.body;
+  try {
+    const updatedScenario = await updateFeatures(scenarioID, feature, title, acceptanceCriteria, status);
+    res.json(updatedScenario);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.post('/changeRequests', async (req, res) => {
+  const { scenarioID, changeRequest, title, acceptanceCriteria, status } = req.body;
+  try {
+    const updatedScenario = await changeRequests(scenarioID, changeRequest, title, acceptanceCriteria, status);
+    res.json(updatedScenario);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.post('/updateUserStories', async (req, res) => {
+  const { scenarioID, userStory, title, acceptanceCriteria, status } = req.body;
+  try {
+    const updatedScenario = await updateUserStories(scenarioID, userStory, title, acceptanceCriteria, status);
+    res.json(updatedScenario);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.get('/features/:scenarioID', async (req, res) => {
+  const scenarioID = req.params.scenarioID;
+  try {
+    const features = await getFeaturesByScenario(scenarioID);
+    res.json(features);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.get('/bugs/:scenarioID', async (req, res) => {
+  const scenarioID = req.params.scenarioID;
+  try {
+    const bugs = await getBugsByScenario(scenarioID);
+    res.json(bugs);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.get('/changeRequests/:scenarioID', async (req, res) => {
+  const scenarioID = req.params.scenarioID;
+  try {
+    const changeRequests = await getCRsByScenario(scenarioID);
+    res.json(changeRequests);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.get('/userStories/:scenarioID', async (req, res) => {
+  const scenarioID = req.params.scenarioID;
+  try {
+    const userStories = await getUserStoriesByScenario(scenarioID);
+    res.json(userStories);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+scenarioRoutes.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const userID = await authenticateUser(email, password);
+    res.json({ userID: userID });
+  } catch (error) {
+    res.status(401).send(error.message);  // 401 Unauthorized
+  }
+});
+
+export default scenarioRoutes;
 
