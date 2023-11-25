@@ -9,6 +9,7 @@ const Scenario = (props) => (
     <td>{props.scenario.acceptanceCriteria}</td>
     <td>{props.scenario.teamName}</td>
     <td>
+      <Link className="btn btn-link" to={`/view/${props.scenario._id}`}>View</Link> |
       <Link className="btn btn-link" to={`/edit/${props.scenario._id}`}>Edit</Link> |
       <button
         className="btn btn-link"
@@ -29,12 +30,63 @@ export default function ScenarioList() {
   useEffect(() => {
     async function getScenarios() {
       const response = await fetch(`http://localhost:3000/scenarios/:userId`)
+      console.log(response)
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`
         window.alert(message)
         return
       }
-      const scenarios = await response.json()
+      // const scenarios = await response.json()
+      const scenarios = [ //NOTE: MOCK DATA. REMOVE WHEN USER AUTH IS SET UP
+        {
+          _id: "65611ac49bb01a63fe01563c",
+          userId: '',
+          title: 'dwad',
+          description: 'awdaw',
+          acceptanceCriteria: 'awdaw',
+          teamName: '',
+          bugs: [],
+          changeRequests: [],
+          features: [],
+          userStories: []
+        },
+        {
+          _id: "65611ad09bb01a63fe01563d",
+          userId: '',
+          title: 'ewadaw',
+          description: 'dawd',
+          acceptanceCriteria: 'awd',
+          teamName: 'awd',
+          bugs: [],
+          changeRequests: [],
+          features: [],
+          userStories: []
+        },
+        {
+          _id: "65611c3e9bb01a63fe01563e",
+          userId: '',
+          title: 'dawd',
+          description: 'awdwa',
+          acceptanceCriteria: 'awdaw',
+          teamName: 'daw',
+          bugs: [],
+          changeRequests: [],
+          features: [],
+          userStories: []
+        },
+        {
+          _id: "65611cdb9bb01a63fe01563f",
+          userId: '',
+          title: 'abc1',
+          description: 'abc1',
+          acceptanceCriteria: 'abc',
+          teamName: '',
+          bugs: [],
+          changeRequests: [],
+          features: [],
+          userStories: []
+        }
+      ]
       console.log(scenarios)
       setScenarios(scenarios)
     }
@@ -66,9 +118,9 @@ export default function ScenarioList() {
 
   // This following section will display the table with the scenarios.
   return (
-    <div>
+    <div className="content-container scenariolist">
       <h3>Scenario List</h3>
-      <table className="table table-striped" style={{ marginTop: 20 }}>
+      <table className="table" style={{ marginTop: 20 }}>
         <thead>
           <tr>
             <th>Title</th>

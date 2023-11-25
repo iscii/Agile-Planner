@@ -43,7 +43,7 @@ export default function Create() {
  }
   // This following section will display the form that takes the input from the user.
   return (
-    <div>
+    <div className="content-container create">
       <h3>Create New Scenario</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group">
@@ -98,7 +98,7 @@ export default function Create() {
           <input
             type="submit"
             value="Create Scenario"
-            className="btn btn-primary"
+            className="btn btn-primary mt-4"
           />
         </div>
       </form>
