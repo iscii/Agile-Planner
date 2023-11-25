@@ -1,5 +1,5 @@
 import express from 'express'
-import { scenarios,users } from '../config/mongoCollections.js';
+import { scenarios, users } from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 const scenarioRoutes = express.Router();
 import { updateBugs, updateFeatures, changeRequests, updateUserStories, getBugsByScenario, getFeaturesByScenario, getCRsByScenario, getUserStoriesByScenario } from '../db/scenarios.js';
