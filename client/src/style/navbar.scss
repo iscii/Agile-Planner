@@ -1,0 +1,14 @@
+nav {
+    background-color: #14152d !important;
+    a {
+        color: white !important;
+    }
+}
+
+// for some reason these aren't defined in bootstrap
+.navbar-brand {
+    margin-left: 5% !important;
+}
+.navbar-right {
+    margin-right: 5% !important;
+}
