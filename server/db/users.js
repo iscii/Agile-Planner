@@ -3,6 +3,7 @@ import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import bcrypt from 'bcrypt';
 
+
 const saltRounds = 5;
 export const createUser = async (userName, email, password) => {
   try {
@@ -34,7 +35,7 @@ export const createUser = async (userName, email, password) => {
     const newUser = await collection.findOne({
       _id: new ObjectId(result.insertedId),
     });    
-    console.log(newUser);
+    console.log(result);
     if (result.acknowledged) {
       return result.insertedId;
     } else {
@@ -45,6 +46,16 @@ export const createUser = async (userName, email, password) => {
   }
 };
 
+export const authenticateUser = async (email, password) => {
+    const collection = await users();
+    const user = await collection.findOne({ email: email });
+
+    if (user && await bcrypt.compare(password, user.password)) {
+      return user._id;
+    } else {
+      throw new Error('Authentication failed');
+    }
+}
 
 export const userExists = async (email) => {
   try {
@@ -82,4 +93,6 @@ export const deleteUser = async (email) => {
     throw new Error(`Error deleting user: ${error.message}`);
   }
 };
+
+
 
