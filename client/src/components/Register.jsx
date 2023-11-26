@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import SignIn from './SignIn' // Import your SignIn component
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
   const [email, setEmail] = useState('')
@@ -8,59 +10,77 @@ const Register = () => {
   const [userName, setUserName] = useState('')
   const [isRegistered, setIsRegistered] = useState(false) // New state for controlling the view
   const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const response = await axios.post('http://localhost:3000/createUser', { userName, email, password })
+      console.log(response)
+      console.log(`successfully registered user ${userName}`)
       setIsRegistered(true) // Set true to switch to SignIn view on successful registration
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (error.response && error.response.status === 401 || error.response.status === 404) {
         setErrorMessage('Invalid email or password')
       } else {
-        setErrorMessage('An error occurred during login')
+        // Note: backend does not throw proper error codes, so we cannot handle them correctly here.
+        // setErrorMessage('An error occurred during login')
+        setErrorMessage("User already exists")
       }
     }
   }
 
   if (isRegistered) {
-    return <SignIn /> // Render SignIn component upon successful registration
+    navigate('/signin') // Redirect to SignIn view
   }
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>userName:</label>
-          <input
-            type="text"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
-        {errorMessage && <p>{errorMessage}</p>}
-      </form>
+    <div className='content-container register'>
+      <h3>Register</h3>
+      <div className='register-form'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Email:
+              <input
+                type="email"
+                className='form-control'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                />
+              </label>
+          </div>
+          <div>
+            <label>userName:
+              <input
+                type="text"
+                className='form-control'
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                required
+                />
+              </label>
+          </div>
+          <div>
+            <label>Password:
+              <input
+                type="password"
+                className='form-control'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                />
+              </label>
+          </div>
+          <div className='error-msg'>
+            { errorMessage && 
+              errorMessage
+            }
+          </div> 
+          <input type='submit' value='Register' className="btn btn-primary mt-1" /> <br/>
+        </form>
+        <span className='link-msg'>Already have an account? <Link to='/signin'>Sign In</Link></span>
+      </div>
     </div>
   )
 }

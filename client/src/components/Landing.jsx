@@ -5,7 +5,6 @@ const Landing = () => {
   return (
     <div>
       <Signin />
-      <Link to='/register'>Register</Link>
     </div>
   )
 }

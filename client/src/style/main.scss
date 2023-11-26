@@ -18,13 +18,29 @@ h3 {
     height: 85%;
 }
 
-.content-container.edit {
-    .edit-form {
+.content-container.edit, 
+.content-container.create,
+.content-container.register,
+.content-container.signin {
+    .edit-form, 
+    .create-form,
+    .register-form,
+    .signin-form {
         height: 90%;
         border: 2px solid $color-secondary;
         border-radius: 10px;
         padding: 25px;
     }
+    .error-msg {
+        height: 25px;
+        font-size: 0.8rem;
+        color: red;
+    }
+    .link-msg {
+        display: inline-block;
+        margin-top: 10px;
+    }
+    
 }
 
 .content-container.create {
@@ -34,7 +50,6 @@ h3 {
         border-radius: 10px;
         padding: 25px;
     }
-
 }
 
 .content-container.scenariolist {
