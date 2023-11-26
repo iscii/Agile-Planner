@@ -37,22 +37,22 @@ import { useParams, useNavigate } from "react-router";
    });
  }
   async function onSubmit(e) {
-   e.preventDefault();
-   const editedPerson = {
-    title: form.title,
-    description: form.description,
-    status: form.status,
-    acceptanceCriteria: form.acceptanceCriteria,
-    teamName: form.teamName
-   };
+    e.preventDefault();
+    const editedPerson = {
+      title: form.title,
+      description: form.description,
+      status: form.status,
+      acceptanceCriteria: form.acceptanceCriteria,
+      teamName: form.teamName
+    };
     // This will send a post request to update the data in the database.
-   await fetch(`http://localhost:3000/update/${params.id}`, {
-     method: "POST",
-     body: JSON.stringify(editedPerson),
-     headers: {
-       'Content-Type': 'application/json'
-     },
-   });
+    await fetch(`http://localhost:3000/update/${params.id}`, {
+      method: "POST",
+      body: JSON.stringify(editedPerson),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
     navigate("/");
  }
   // This following section will display the form that takes input from the user to update the data.

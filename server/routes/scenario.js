@@ -258,7 +258,16 @@ scenarioRoutes.get('/userStories/:scenarioID', async (req, res) => {
   }
 });
 
-
+scenarioRoutes.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const userID = await authenticateUser(email, password);
+    console.log("successfully logged in user with id: " + userID);
+    res.json({ userID: userID });
+  } catch (error) {
+    res.status(401).send(error.message);  // 401 Unauthorized
+  }
+});
 
 export default scenarioRoutes;
 

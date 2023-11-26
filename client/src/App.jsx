@@ -18,6 +18,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Landing />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route exact path="/scenarios" element={<ScenarioList />} />
         <Route path="/edit/:id" element={<Edit />} />
