@@ -120,19 +120,21 @@ export default function ScenarioList() {
   return (
     <div className="content-container scenariolist">
       <h3>Scenario List</h3>
-      <table className="table" style={{ marginTop: 20 }}>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Acceptance Criteria</th>
-            <th>Team Name</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>{scenarioList()}</tbody>
-      </table>
+      <div className="list">
+        <table className="table" style={{ marginTop: 20 }}>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Acceptance Criteria</th>
+              <th>Team Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>{scenarioList()}</tbody>
+        </table>
+      </div>
     </div>
   )
 }

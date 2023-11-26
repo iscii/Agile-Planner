@@ -57,65 +57,68 @@ import { useParams, useNavigate } from "react-router";
  }
   // This following section will display the form that takes input from the user to update the data.
   return (
-    <div>
+    <div className="content-container edit">
       <h3>Update Scenario</h3>
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Title: </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            value={form.title}
-            onChange={(e) => updateForm({ title: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description: </label>
-          <textarea
-            className="form-control"
-            id="description"
-            value={form.description}
-            onChange={(e) => updateForm({ description: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="status">Status: </label>
-          <input
-            type="text"
-            className="form-control"
-            id="status"
-            value={form.status}
-            onChange={(e) => updateForm({ status: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="acceptanceCriteria">Acceptance Criteria: </label>
-          <textarea
-            className="form-control"
-            id="acceptanceCriteria"
-            value={form.acceptanceCriteria}
-            onChange={(e) => updateForm({ acceptanceCriteria: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="teamName">Team Name: </label>
-          <input
-            type="text"
-            className="form-control"
-            id="teamName"
-            value={form.teamName}
-            onChange={(e) => updateForm({ teamName: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="submit"
-            value="Update Scenario"
-            className="btn btn-primary"
-          />
-        </div>
-      </form>
+      <div className="edit-form">
+
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">Title: </label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              value={form.title}
+              onChange={(e) => updateForm({ title: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description: </label>
+            <textarea
+              className="form-control"
+              id="description"
+              value={form.description}
+              onChange={(e) => updateForm({ description: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="status">Status: </label>
+            <input
+              type="text"
+              className="form-control"
+              id="status"
+              value={form.status}
+              onChange={(e) => updateForm({ status: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="acceptanceCriteria">Acceptance Criteria: </label>
+            <textarea
+              className="form-control"
+              id="acceptanceCriteria"
+              value={form.acceptanceCriteria}
+              onChange={(e) => updateForm({ acceptanceCriteria: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Team Name: </label>
+            <input
+              type="text"
+              className="form-control"
+              id="teamName"
+              value={form.teamName}
+              onChange={(e) => updateForm({ teamName: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Update Scenario"
+              className="btn btn-primary mt-4"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -165,60 +165,74 @@ export default function View() {
 				return <div>Artifact does not exist</div>
 		}
 	}
+
+	const changeArtifact = (e, artifact) => {
+		// clear classnames
+		// set classname to selected
+		const tabs = document.querySelectorAll('.artifacts-tabs button')
+		tabs.forEach(tab => {
+			tab.classList.remove('selected')
+		})
+		e.target.classList.add('selected')
+		setArtifact(artifact)
+	}
   
-  return (
-    <div className="content-container view">
-			<div className="info">
-				<h3>
-					<div>
-						Scenario Info
-					</div>	
-				</h3>
-				<div className="info-content">
-					{	loading ?
+	return (
+		<div className="content-container view">
+				<div className="info">
+					<h3>
 						<div>
-							Loading...
-						</div> :
-						<>
-							<span>{scenario.title ?? "No Title"}</span>
-							<span>{scenario.description ?? "No Description"}</span>
-						</>
-					}
-				</div>
-			</div>
-			<div className="artifacts">
-				<h3>
-					<div>
-						<button className='selected' onClick={() => setArtifact('US')}>User Stories</button>
-						<button onClick={() => setArtifact('F')}>Features</button>
-						<button onClick={() => setArtifact('B')}>Bugs</button>
-						<button onClick={() => setArtifact('CR')}>CRs</button>
+							Scenario Info
+						</div>	
+					</h3>
+					<div className="info-content">
+						{	loading ?
+							<div>
+								Loading...
+							</div> :
+							<>
+								<div className="infolet">Title: <br/> <span>{scenario.title || "N/A"}</span></div>
+								<div className="infolet">Description: <br/> <span>{scenario.description || "N/A"}</span></div>
+								<div className="infolet">Acceptance Criteria: <br/> <span>{scenario.acceptanceCriteria || "N/A"}</span></div>
+								<div className="infolet">Team Name: <br/> <span>{scenario.teamName || "N/A"}</span></div>
+								<div className="infolet">Status: <br/> <span>{scenario.status || "N/A"}</span></div>
+							</>
+						}
 					</div>
-				</h3>
-				<div className="artifacts-content">
-					<table className="table" style={{ marginTop: 20 }}>
-						<thead>
-						<tr>
-							<th>Title</th>
-							<th>Description</th>
-							<th>Status</th>
-							<th>Acceptance Criteria</th>
-							<th>Team Name</th>
-							<th>Action</th>
-						</tr>
-						</thead>
-						<tbody>
-							{	loading ?
-								<tr>
-									<td colSpan="6">Loading...</td>
-								</tr>
-								:
-								artifactsList()
-							}
-						</tbody>
-					</table>
 				</div>
-			</div>
-    </div>
-  )
+				<div className="artifacts">
+					<h3>
+						<div className='artifacts-tabs'>
+							<button className='selected' onClick={(e) => changeArtifact(e, 'US')}>User Stories</button>
+							<button onClick={(e) => changeArtifact(e, 'F')}>Features</button>
+							<button onClick={(e) => changeArtifact(e, 'B')}>Bugs</button>
+							<button onClick={(e) => changeArtifact(e, 'CR')}>CRs</button>
+						</div>
+					</h3>
+					<div className="artifacts-content">
+						<table className="table" style={{ marginTop: 20 }}>
+							<thead>
+							<tr>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Status</th>
+								<th>Acceptance Criteria</th>
+								<th>Team Name</th>
+								<th>Action</th>
+							</tr>
+							</thead>
+							<tbody>
+								{	loading ?
+									<tr>
+										<td colSpan="6">Loading...</td>
+									</tr>
+									:
+									artifactsList()
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+		</div>
+	)
 }

@@ -45,63 +45,65 @@ export default function Create() {
   return (
     <div className="content-container create">
       <h3>Create New Scenario</h3>
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            value={form.title}
-            onChange={(e) => updateForm({ title: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <textarea
-            className="form-control"
-            id="description"
-            value={form.description}
-            onChange={(e) => updateForm({ description: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="status">Status</label>
-          <input
-            type="text"
-            className="form-control"
-            id="status"
-            value={form.status}
-            onChange={(e) => updateForm({ status: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="acceptanceCriteria">Acceptance Criteria</label>
-          <textarea
-            className="form-control"
-            id="acceptanceCriteria"
-            value={form.acceptanceCriteria}
-            onChange={(e) => updateForm({ acceptanceCriteria: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="teamName">Team Name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="teamName"
-            value={form.teamName}
-            onChange={(e) => updateForm({ teamName: e.target.value })}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="submit"
-            value="Create Scenario"
-            className="btn btn-primary mt-4"
-          />
-        </div>
-      </form>
+      <div className="create-form">
+        <form onSubmit={onSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              value={form.title}
+              onChange={(e) => updateForm({ title: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea
+              className="form-control"
+              id="description"
+              value={form.description}
+              onChange={(e) => updateForm({ description: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="status">Status</label>
+            <input
+              type="text"
+              className="form-control"
+              id="status"
+              value={form.status}
+              onChange={(e) => updateForm({ status: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="acceptanceCriteria">Acceptance Criteria</label>
+            <textarea
+              className="form-control"
+              id="acceptanceCriteria"
+              value={form.acceptanceCriteria}
+              onChange={(e) => updateForm({ acceptanceCriteria: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="teamName">Team Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="teamName"
+              value={form.teamName}
+              onChange={(e) => updateForm({ teamName: e.target.value })}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Create Scenario"
+              className="btn btn-primary mt-4"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import ScenarioList from "./components/ScenarioList";
 import Edit from "./components/Edit";
 import View from "./components/View";
 import Create from "./components/Create";
-import Content from "./components/Artifact";
+import Artifact from "./components/Artifact";
 import "./style/main.scss"
  const App = () => {
  return (
@@ -18,7 +18,7 @@ import "./style/main.scss"
        <Route path="/edit/:id" element={<Edit />} />
        <Route path='/view/:id' element={<View />} />
        <Route path="/create" element={<Create />} />
-       <Route path='/view/:id/:content/:id' element={<Content />} />
+       <Route path='/view/:id/:artifact/:artifactId' element={<Artifact />} />
      </Routes>
    </div>
  );
