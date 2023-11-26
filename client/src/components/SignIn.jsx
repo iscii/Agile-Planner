@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../contexts/UserContext'
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const {setUserCookie} =  useContext(UserContext)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -14,12 +18,20 @@ const SignIn = () => {
       const response = await axios.post('http://localhost:3000/login', { email, password })
       console.log(response)
       console.log(`successfully logged in user ${email}`)
+      if(!response) throw "Error Signing in"
+      const user = {
+        id: response.data.userID
+      }
+
+      setUserCookie(user);
+
+      navigate('/')
       // Handle successful login, e.g., store user ID in state or localStorage
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 404) {
         setErrorMessage('Invalid email or password')
       } else {
-        setErrorMessage('An error occurred during login')
+        setErrorMessage('An error has occurred')
       }
     }
   }

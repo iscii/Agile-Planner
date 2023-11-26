@@ -8,26 +8,53 @@ import Edit from "./components/Edit"
 import View from "./components/View"
 import Create from "./components/Create"
 import Artifact from "./components/Artifact"
-import "./style/main.scss"
-import Landing from "./components/Landing"
 import SignIn from "./components/SignIn"
 import Register from "./components/Register"
+import Protected from "./components/Protected"
+import CounterProtected from "./components/CounterProtected"
+import Logout from "./components/Logout"
+import { UserProvider } from "./contexts/UserContext"
+import "./style/main.scss"
+
 const App = () => {
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Landing />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-        <Route exact path="/scenarios" element={<ScenarioList />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path='/view/:id' element={<View />} />
-        <Route path="/create" element={<Create />} />
-        <Route path='/view/:id/:artifact/:artifactId' element={<Artifact />} />
-
-      </Routes>
-    </div>
+    <UserProvider>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Protected />}>
+            <Route path="/" element={<ScenarioList />} />
+          </Route>
+          <Route path="/signin" element={<CounterProtected />} >
+            <Route path="/signin" element={<SignIn />} />
+          </Route>
+          <Route path="/register" element={<CounterProtected />} >
+            <Route path="/register" element={<Register />} />
+          </Route>
+          <Route path="/logout" element={<Protected />}>
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+          <Route path="/scenarios" element={<Protected />}>
+            <Route path="/scenarios" element={<ScenarioList />} />
+          </Route>
+          <Route path="/edit" element={<Protected />}>
+            <Route path="/edit/:id" element={<Edit />} />
+          </Route>
+          <Route path="/create" element={<Protected />}>
+            <Route path="/create" element={<Create />} />
+          </Route>
+          <Route path='/view/:id' element={<Protected />}>
+            <Route path='/view/:id' element={<View />} />
+          </Route>
+          <Route path='/view/:id/:artifact/:artifactId' element={<Protected />}>
+            <Route path='/view/:id/:artifact/:artifactId' element={<Artifact />} />
+          </Route>
+          <Route path='*' element={<Protected />}>
+            <Route path="*" element={<ScenarioList />} />
+          </Route>      
+        </Routes>
+      </div>
+    </UserProvider>
   )
 }
 export default App

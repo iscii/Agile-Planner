@@ -36,58 +36,57 @@ export default function ScenarioList() {
         window.alert(message)
         return
       }
-      // const scenarios = await response.json()
-      const scenarios = [ //NOTE: MOCK DATA. REMOVE WHEN USER AUTH IS SET UP
-        {
-          _id: "65611ac49bb01a63fe01563c",
-          userId: '',
-          title: 'dwad',
-          description: 'awdaw',
-          acceptanceCriteria: 'awdaw',
-          teamName: '',
-          bugs: [],
-          changeRequests: [],
-          features: [],
-          userStories: []
-        },
-        {
-          _id: "65611ad09bb01a63fe01563d",
-          userId: '',
-          title: 'ewadaw',
-          description: 'dawd',
-          acceptanceCriteria: 'awd',
-          teamName: 'awd',
-          bugs: [],
-          changeRequests: [],
-          features: [],
-          userStories: []
-        },
-        {
-          _id: "65611c3e9bb01a63fe01563e",
-          userId: '',
-          title: 'dawd',
-          description: 'awdwa',
-          acceptanceCriteria: 'awdaw',
-          teamName: 'daw',
-          bugs: [],
-          changeRequests: [],
-          features: [],
-          userStories: []
-        },
-        {
-          _id: "65611cdb9bb01a63fe01563f",
-          userId: '',
-          title: 'abc1',
-          description: 'abc1',
-          acceptanceCriteria: 'abc',
-          teamName: '',
-          bugs: [],
-          changeRequests: [],
-          features: [],
-          userStories: []
-        }
-      ]
-      console.log(scenarios)
+      const scenarios = await response.json()
+      // const scenarios = [ //NOTE: MOCK DATA. REMOVE WHEN USER AUTH IS SET UP
+      //   {
+      //     _id: "65611ac49bb01a63fe01563c",
+      //     userId: '',
+      //     title: 'dwad',
+      //     description: 'awdaw',
+      //     acceptanceCriteria: 'awdaw',
+      //     teamName: '',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   },
+      //   {
+      //     _id: "65611ad09bb01a63fe01563d",
+      //     userId: '',
+      //     title: 'ewadaw',
+      //     description: 'dawd',
+      //     acceptanceCriteria: 'awd',
+      //     teamName: 'awd',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   },
+      //   {
+      //     _id: "65611c3e9bb01a63fe01563e",
+      //     userId: '',
+      //     title: 'dawd',
+      //     description: 'awdwa',
+      //     acceptanceCriteria: 'awdaw',
+      //     teamName: 'daw',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   },
+      //   {
+      //     _id: "65611cdb9bb01a63fe01563f",
+      //     userId: '',
+      //     title: 'abc1',
+      //     description: 'abc1',
+      //     acceptanceCriteria: 'abc',
+      //     teamName: '',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   }
+      // ]
       setScenarios(scenarios)
     }
     getScenarios()
