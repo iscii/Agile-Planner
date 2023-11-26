@@ -5,6 +5,20 @@ const scenarioRoutes = express.Router();
 import { updateBugs, updateFeatures, changeRequests, updateUserStories, getBugsByScenario, getFeaturesByScenario, getCRsByScenario, getUserStoriesByScenario } from '../db/scenarios.js';
 import { createUser, deleteUser, authenticateUser } from '../db/users.js';
 
+
+scenarioRoutes.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+      const userID = await authenticateUser(email, password);
+      // Set the user ID in session
+      req.session.userId = userID;
+      res.json({ userID: userID });
+  } catch (error) {
+      res.status(401).send(error.message);  // 401 Unauthorized
+  }
+});
+
+
 scenarioRoutes.route("/scenarios/:userId").get(async function (req, res) {
   try {
     const userId = req.params.userId; // Get user ID from URL parameters
@@ -244,15 +258,7 @@ scenarioRoutes.get('/userStories/:scenarioID', async (req, res) => {
   }
 });
 
-scenarioRoutes.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const userID = await authenticateUser(email, password);
-    res.json({ userID: userID });
-  } catch (error) {
-    res.status(401).send(error.message);  // 401 Unauthorized
-  }
-});
+
 
 export default scenarioRoutes;
 
