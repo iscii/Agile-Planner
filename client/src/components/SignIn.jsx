@@ -11,7 +11,9 @@ const SignIn = () => {
     e.preventDefault()
 
     try {
-      const response = await axios.post('/login', { email, password })
+      const response = await axios.post('http://localhost:3000/login', { email, password })
+      console.log(response)
+      console.log(`successfully logged in user ${email}`)
       // Handle successful login, e.g., store user ID in state or localStorage
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 404) {

@@ -51,7 +51,7 @@ const Register = () => {
               </label>
           </div>
           <div>
-            <label>userName:
+            <label>Username:
               <input
                 type="text"
                 className='form-control'
