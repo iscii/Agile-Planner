@@ -35,6 +35,7 @@ export const create = async(
   return scenario;
 }
 
+
 const getAll = async () => {
   //Add userID to getAll by userId
   const scenarioCollection = await scenarios();
@@ -48,6 +49,7 @@ const getAll = async () => {
     return element;
   });
 };
+
 
 const get = async (scenarioId) => {
   if (!scenarioId) {
@@ -105,6 +107,7 @@ export const updateBugs = async (
   return await get(scenarioID);
 };
 
+
 export const updateFeatures = async (scenarioID, feature, title, acceptanceCriteria, status) => {
   const scenarioCollection = await scenarios();
   const existingScenario = await get(scenarioID);
@@ -131,6 +134,7 @@ export const updateFeatures = async (scenarioID, feature, title, acceptanceCrite
 
   return await get(scenarioID);
 };
+
 
 export const changeRequests = async (scenarioID, changeRequest,title, acceptanceCriteria, status) => {
   const scenarioCollection = await scenarios();
@@ -159,6 +163,7 @@ export const changeRequests = async (scenarioID, changeRequest,title, acceptance
   return await get(scenarioID);
 };
 
+
 export const updateUserStories = async (scenarioID, userStory,title, acceptanceCriteria, status) => {
   const scenarioCollection = await scenarios();
   const existingScenario = await get(scenarioID);
@@ -184,6 +189,7 @@ export const updateUserStories = async (scenarioID, userStory,title, acceptanceC
   );
   return await get(scenarioID);
 };
+
 
 export const update = async (scenarioID, userId, title, description, status, acceptanceCriteria, teamName) => {
   const scenarioCollection = await scenarios();
@@ -258,6 +264,7 @@ export const update = async (scenarioID, userId, title, description, status, acc
   return await get(scenarioID);
 };
 
+
 export const deleteScenario = async (scenarioID) => {
   const scenarioCollection = await scenarios();
   const deleteData = await scenarioCollection.deleteOne({ _id: new ObjectId(scenarioID) });
@@ -268,6 +275,7 @@ export const deleteScenario = async (scenarioID) => {
 
   return deleteData;
 }
+
 
 export const getFeaturesByScenario = async(scenarioID) => {
   try{
@@ -296,6 +304,7 @@ export const getFeaturesByScenario = async(scenarioID) => {
     }
 }
 
+
 export const getBugsByScenario = async(scenarioID) =>{
   try{
     if (!scenarioID) {
@@ -323,6 +332,7 @@ export const getBugsByScenario = async(scenarioID) =>{
   }
 }
 
+
 export const getCRsByScenario = async(scenarioID) =>{
     try{
       if (!scenarioID) {
@@ -349,6 +359,7 @@ export const getCRsByScenario = async(scenarioID) =>{
         console.log(error);
       }
 }
+
 
 export const getUserStoriesByScenario = async(scenarioID) =>{
   try{
