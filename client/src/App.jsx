@@ -10,7 +10,7 @@ import Create from "./components/Create"
 import Artifact from "./components/Artifact"
 import "./style/main.scss"
 import Landing from "./components/Landing"
-import SignIn from "./components/Signin"
+import SignIn from "./components/SignIn"
 import Register from "./components/Register"
 const App = () => {
   return (

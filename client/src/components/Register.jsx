@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import SignIn from './Signin' // Import your SignIn component
+import SignIn from './SignIn' // Import your SignIn component
 import { useNavigate } from 'react-router-dom'
 const Register = () => {
   const [email, setEmail] = useState('')
