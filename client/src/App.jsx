@@ -9,23 +9,26 @@ import View from "./components/View"
 import Create from "./components/Create"
 import Artifact from "./components/Artifact"
 import SignIn from "./components/SignIn"
-import Register from "./components/Register"
+//import Register from "./components/Register"
+import FireBaseRegister from "./components/FireBaseRegister"
+import FireBaseLogin from "./components/FireBaseLogin"
 //import Protected from "./components/Protected"
 //import CounterProtected from "./components/CounterProtected"
 import Logout from "./components/Logout"
-import { UserProvider } from "./contexts/UserContext"
+//import { UserProvider } from "./contexts/UserContext"
+import { AuthProvider } from "./contexts/AuthContext"
 import "./style/main.scss"
 
 
 const App = () => {
   return (
-    <UserProvider>
+    <AuthProvider>
       <div>
         <Navbar />
         <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<FireBaseLogin />} />
+          <Route path="/signin" element={<FireBaseLogin />} />
+          <Route path="/register" element={<FireBaseRegister />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/scenarios" element={<ScenarioList />} />
           <Route path="/edit/:id" element={<Edit />} />
@@ -35,7 +38,7 @@ const App = () => {
           <Route path="*" element={<ScenarioList />} />
         </Routes>
       </div>
-    </UserProvider>
+    </AuthProvider>
   )
 }
 

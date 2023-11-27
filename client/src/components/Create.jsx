@@ -1,46 +1,51 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState, useContext } from "react"
+import { useNavigate } from "react-router"
+import { AuthContext } from "../contexts/AuthContext"
 export default function Create() {
- const [form, setForm] = useState({
-  userId: "",
-  title: "",
-  description: "",
-  status: "",
-  acceptanceCriteria: "",
-  teamName: ""
- });
- const navigate = useNavigate();
-  // These methods will update the state properties.
- function updateForm(value) {
-   return setForm((prev) => {
-     return { ...prev, ...value };
-   });
- }
-  // This function will handle the submission.
- async function onSubmit(e) {
-   e.preventDefault();
-    // When a post request is sent to the create url, we'll add a new record to the database.
-   const newScenario = { ...form };
-    await fetch("http://localhost:3000/scenario/add", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify(newScenario),
-   })
-   .catch(error => {
-     window.alert(error);
-     return;
-   });
-    setForm({ userId: "",
+  const { currentUser } = useContext(AuthContext)
+  const userId = currentUser ? currentUser.uid : "No user logged in"	//const currentUser = useContext(UserContext)
+  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    userId: userId,
     title: "",
     description: "",
     status: "",
     acceptanceCriteria: "",
     teamName: ""
-   });
-   navigate("/");
- }
+  })
+
+  // These methods will update the state properties.
+  function updateForm(value) {
+    return setForm((prev) => {
+      return { ...prev, ...value }
+    })
+  }
+  // This function will handle the submission.
+  async function onSubmit(e) {
+    e.preventDefault()
+    // When a post request is sent to the create url, we'll add a new record to the database.
+    const newScenario = { ...form }
+    await fetch("http://localhost:3000/scenario/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newScenario),
+    })
+      .catch(error => {
+        window.alert(error)
+        return
+      })
+    setForm({
+      userId: userId,
+      title: "",
+      description: "",
+      status: "",
+      acceptanceCriteria: "",
+      teamName: ""
+    })
+    navigate("/scenarios")
+  }
   // This following section will display the form that takes the input from the user.
   return (
     <div className="content-container create">
@@ -105,5 +110,5 @@ export default function Create() {
         </form>
       </div>
     </div>
-  );
+  )
 }

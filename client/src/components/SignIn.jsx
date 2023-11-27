@@ -8,7 +8,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const { setUserCookie } = useContext(UserContext)
+  //const { setUserCookie } = useContext(UserContext)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -23,9 +23,9 @@ const SignIn = () => {
         id: response.data.userId
       }
 
-      setUserCookie(user)
-      console.log(user)
-      navigate('/view')
+      //setUserCookie(user)
+      //console.log(user)
+      navigate('/scenarios')
       // Handle successful login, e.g., store user ID in state or localStorage
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 404) {

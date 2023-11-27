@@ -2,14 +2,16 @@ import React, { useEffect, useState, useContext } from "react"
 // import scenario provider from context
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { AuthContext } from "../contexts/AuthContext"
 
 export default function Content() {
   // This following section will display the table with the scenarios.
   const [artifact, setArtifact] = useState(null)
   const [header, setHeader] = useState('')
   const [loading, setLoading] = useState(true)
-	const params = useParams()
-	const id = params.id
+  const params = useParams()
+  const { currentUser } = useContext(AuthContext)
+  const userId = currentUser ? currentUser.uid : "No user logged in"
   const artifactType = params.artifact
   const artifactId = params.artifactId
 
@@ -19,7 +21,7 @@ export default function Content() {
   // but then we dunno which array to render from.
   useEffect(() => {
     async function getScenario() {
-      const response = await fetch(`http://localhost:3000/scenarios/${id}`)
+      const response = await fetch(`http://localhost:3000/scenarios/${userId}`)
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`
         window.alert(message)
@@ -123,63 +125,69 @@ export default function Content() {
       //   }]
       // }
 
-      let artifactData;
+      let artifactData
       switch (artifactType) {
-          case 'US':
-            artifactData = scenario.userStories.find((us) => us._id === artifactId)
-            setArtifact(artifactData)
-            setHeader(`User Story ${artifactData.title}`)
-          break;
-          case 'F':
-            artifactData = scenario.features.find((f) => f._id === artifactId)
-            setArtifact(artifactData)
-            setHeader(`Feature ${artifactData.title}`)
-          break;
-          case 'CR':
-            artifactData = scenario.changeRequests.find((cr) => cr._id === artifactId)
-            setArtifact(artifactData)
-            setHeader(`Change Request ${artifactData.title}`)
-          break;
-          case 'B':
-            artifactData = scenario.bugs.find((bug) => bug._id === artifactId)
-            setArtifact(artifactData)
-            setHeader(`Bug ${artifactData.title}`)
-          break;
+        case 'US':
+          artifactData = scenario.userStories.find((us) => us._id === artifactId)
+          setArtifact(artifactData)
+          setHeader(`User Story ${artifactData ? artifactData.title : 'Not Found'}`)
+          break
+        case 'F':
+          artifactData = scenario.features.find((f) => f._id === artifactId)
+          setArtifact(artifactData)
+          setHeader(`Feature ${artifactData ? artifactData.title : 'Not Found'}`)
+          break
+        case 'CR':
+          artifactData = scenario.changeRequests.find((cr) => cr._id === artifactId)
+          setArtifact(artifactData)
+          setHeader(`Change Request ${artifactData ? artifactData.title : 'Not Found'}`)
+          break
+        case 'B':
+          artifactData = scenario.bugs.find((bug) => bug._id === artifactId)
+          setArtifact(artifactData)
+          setHeader(`Bug ${artifactData ? artifactData.title : 'Not Found'}`)
+          break
+        default:
+          // Handle the case when artifactType is undefined or not recognized
+          setArtifact(null) // or any other appropriate action
+          setHeader('Artifact Not Found')
+          break
       }
-      setLoading(false);
+
+      setLoading(false)
     }
 
-    getScenario();
-  }, []);
+    getScenario()
+  }, [])
 
   return (
     <div className="content-container artifact">
       <h3>{header}</h3>
-      { loading ? <div>Loading...</div> :
+      {loading ? <div>Loading...</div> :
         <div className='artifact-content'>
           <div className="artifact-form">
             <form>
               <label>
-                Title <br/>
-                <input className="form-control" defaultValue={artifact.title}/>
+                Title <br />
+                <input className="form-control" defaultValue={artifact.title} />
               </label>
               <label>
-                Description <br/>
-                <textarea className="form-control" defaultValue={artifact.description}/>
+                Description <br />
+                <textarea className="form-control" defaultValue={artifact.description} />
               </label>
               <label>
-                Team Name <br/> 
-                <input className="form-control" defaultValue={artifact.teamName}/>
+                Team Name <br />
+                <input className="form-control" defaultValue={artifact.teamName} />
               </label>
               <label>
-                Acceptance Criteria <br/>
-                <textarea className="form-control" defaultValue={artifact.acceptanceCriteria}/>
+                Acceptance Criteria <br />
+                <textarea className="form-control" defaultValue={artifact.acceptanceCriteria} />
               </label>
               {/* <label>
                 Comments
                 <input/>
               </label> */}
-              <input type='submit' className="btn btn-primary mt-4" value='Save'/>
+              <input type='submit' className="btn btn-primary mt-4" value='Save' />
             </form>
           </div>
           <div className='right-info'>
@@ -187,7 +195,7 @@ export default function Content() {
               <div>Status: <span>{artifact.status || "N/A"}</span></div>
               <div>Created: <span>{artifact.createdAt || "N/A"}</span></div>
               <div>Updated: <span>{artifact.updatedAt || "N/A"}</span></div>
-              <Link to={`/view/${id}`}>Back to Scenario</Link>
+              <Link to={`/view`}>Back to Scenario</Link>
             </div>
           </div>
         </div>

@@ -24,7 +24,8 @@ scenarioRoutes.route("/scenarios/:userId").get(async function (req, res) {
     const userId = req.params.userId; // Get user ID from URL parameters
     let scenarioCollection = await scenarios();
     const result = await scenarioCollection.find({ userId: userId }).toArray(); // Filter scenarios by userId
-    res.json(result);
+    console.log(result)
+    return res.json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
