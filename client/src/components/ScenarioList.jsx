@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { Link } from "react-router-dom"
-
+import { UserContext } from "../contexts/UserContext"
 const Scenario = (props) => (
   <tr>
     <td>{props.scenario.title}</td>
@@ -25,31 +25,15 @@ const Scenario = (props) => (
 
 export default function ScenarioList() {
   const [scenarios, setScenarios] = useState([])
-
   const [userId, setUserId] = useState(null)
+  const { currentUser } = useContext(UserContext)
+  const id = currentUser.id
 
-  useEffect(() => {
-    const fetchUserId = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/get-user-id', {
-          credentials: 'include'
-        })
-        if (response.ok) {
-          const data = await response.json()
-          setUserId(data.userId)
-        }
-      } catch (error) {
-        console.error('Error fetching user ID:', error)
-      }
-    }
-
-    fetchUserId()
-  }, [])
-  console.log(`Here is userId: ${userId}`)
+  console.log(`Here is userId: ${id}`)
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await fetch(`http://localhost:3000/scenarios/${userId}`)
+      const response = await fetch(`http://localhost:3000/scenarios/${id}`)
       console.log(response)
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`

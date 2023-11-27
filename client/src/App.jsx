@@ -10,8 +10,8 @@ import Create from "./components/Create"
 import Artifact from "./components/Artifact"
 import SignIn from "./components/SignIn"
 import Register from "./components/Register"
-import Protected from "./components/Protected"
-import CounterProtected from "./components/CounterProtected"
+//import Protected from "./components/Protected"
+//import CounterProtected from "./components/CounterProtected"
 import Logout from "./components/Logout"
 import { UserProvider } from "./contexts/UserContext"
 import "./style/main.scss"
@@ -30,7 +30,7 @@ const App = () => {
           <Route path="/scenarios" element={<ScenarioList />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/create" element={<Create />} />
-          <Route path="/view/:id" element={<View />} />
+          <Route path="/view" element={<View />} />
           <Route path="/view/:id/:artifact/:artifactId" element={<Artifact />} />
           <Route path="*" element={<ScenarioList />} />
         </Routes>

@@ -29,32 +29,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Middleware to protect routes
-function isAuthenticated(req, res, next) {
+// function isAuthenticated(req, res, next) {
 
-    if (req.session && req.session.userId) {
-        console.log(req.session.userId)
-        return next();
-    } else {
-        res.status(401).send('isAuthenticated fired');
-    }
-}
+//     if (req.session && req.session.userId) {
+//         console.log(req.session.userId)
+//         return next();
+//     } else {
+//         res.status(401).send('isAuthenticated fired');
+//     }
+// }
 
-// Apply the authentication middleware to all routes except for login and createUser
-app.use((req, res, next) => {
-    if (req.path === '/login' || req.path === '/createUser') {
-        return next();
-    }
-    isAuthenticated(req, res, next);
-});
+// // Apply the authentication middleware to all routes except for login and createUser
+// app.use((req, res, next) => {
+//     if (req.path === '/login' || req.path === '/createUser') {
+//         return next();
+//     }
+//     isAuthenticated(req, res, next);
+// });
 
-// Add this endpoint in your Express app
-app.get('/get-user-id', (req, res) => {
-    if (req.session.userId) {
-        res.json({ userId: req.session.userId });
-    } else {
-        res.status(401).json({ message: 'No user logged in' });
-    }
-});
+// // Add this endpoint in your Express app
+// app.get('/get-user-id', (req, res) => {
+//     if (req.session.userId) {
+//         res.json({ userId: req.session.userId });
+//     } else {
+//         res.status(401).json({ message: 'No user logged in' });
+//     }
+// });
 
 
 app.use(scenarioRoutes);

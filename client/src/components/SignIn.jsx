@@ -24,8 +24,8 @@ const SignIn = () => {
       }
 
       setUserCookie(user)
-
-      navigate('/scenarios')
+      console.log(user)
+      navigate('/view')
       // Handle successful login, e.g., store user ID in state or localStorage
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 404) {
