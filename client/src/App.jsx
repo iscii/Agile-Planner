@@ -10,11 +10,12 @@ import Create from "./components/Create"
 import Artifact from "./components/Artifact"
 import SignIn from "./components/SignIn"
 import Register from "./components/Register"
-import Protected from "./components/Protected"
-import CounterProtected from "./components/CounterProtected"
+//import Protected from "./components/Protected"
+//import CounterProtected from "./components/CounterProtected"
 import Logout from "./components/Logout"
 import { UserProvider } from "./contexts/UserContext"
 import "./style/main.scss"
+
 
 const App = () => {
   return (
@@ -22,39 +23,20 @@ const App = () => {
       <div>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Protected />}>
-            <Route path="/" element={<ScenarioList />} />
-          </Route>
-          <Route path="/signin" element={<CounterProtected />} >
-            <Route path="/signin" element={<SignIn />} />
-          </Route>
-          <Route path="/register" element={<CounterProtected />} >
-            <Route path="/register" element={<Register />} />
-          </Route>
-          <Route path="/logout" element={<Protected />}>
-            <Route path="/logout" element={<Logout />} />
-          </Route>
-          <Route path="/scenarios" element={<Protected />}>
-            <Route path="/scenarios" element={<ScenarioList />} />
-          </Route>
-          <Route path="/edit" element={<Protected />}>
-            <Route path="/edit/:id" element={<Edit />} />
-          </Route>
-          <Route path="/create" element={<Protected />}>
-            <Route path="/create" element={<Create />} />
-          </Route>
-          <Route path='/view/:id' element={<Protected />}>
-            <Route path='/view/:id' element={<View />} />
-          </Route>
-          <Route path='/view/:id/:artifact/:artifactId' element={<Protected />}>
-            <Route path='/view/:id/:artifact/:artifactId' element={<Artifact />} />
-          </Route>
-          <Route path='*' element={<Protected />}>
-            <Route path="*" element={<ScenarioList />} />
-          </Route>      
+          <Route path="/" element={<SignIn />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/scenarios" element={<ScenarioList />} />
+          <Route path="/edit/:id" element={<Edit />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/view" element={<View />} />
+          <Route path="/view/:id/:artifact/:artifactId" element={<Artifact />} />
+          <Route path="*" element={<ScenarioList />} />
         </Routes>
       </div>
     </UserProvider>
   )
 }
+
 export default App

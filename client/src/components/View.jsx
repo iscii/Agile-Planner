@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 // import scenario provider from context
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-
+import { UserContext } from "../contexts/UserContext"
 const Artifact = (props) => (
 	<tr>
 		<td>{props.title}</td>
@@ -21,16 +21,17 @@ const Artifact = (props) => (
 				Delete
 			</button>
 		</td>
-  	</tr>
-);
+	</tr>
+)
 
 export default function View() {
-  // This following section will display the table with the scenarios.
-  	const [scenario, setScenario] = useState([])
+	// This following section will display the table with the scenarios.
+	const [scenario, setScenario] = useState([])
 	const [artifact, setArtifact] = useState('US')
 	const [loading, setLoading] = useState(true)
 	const params = useParams()
-	const id = params.id
+	const currentUser = useContext(UserContext)
+	const id = currentUser.id
 
 	useEffect(() => {
 		async function getScenario() {
@@ -138,32 +139,35 @@ export default function View() {
 			// 	}]
 			// }
 			setScenario(scenario)
-			setLoading(false);
+			setLoading(false)
 		}
-		getScenario();
-	}, []);
+		getScenario()
+	}, [id])
 
 	const artifactsList = () => {
-		switch (artifact) {
-			case 'US':
-				return scenario.userStories.map((story, i) => {
-					return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
-				});
-			case 'F':
-				return scenario.features.map((feature, i) => {
-					return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
-				});
-			case 'B':
-				return scenario.bugs.map((bug, i) => {
-					return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
-				});
-			case 'CR':
-				return scenario.changeRequests.map((cr, i) => {
-					return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
-				});
-			default:
-				return <div>Artifact does not exist</div>
+		if (scenario.length > 0) {
+			switch (artifact) {
+				case 'US':
+					return scenario.userStories.map((story, i) => {
+						return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
+					})
+				case 'F':
+					return scenario.features.map((feature, i) => {
+						return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
+					})
+				case 'B':
+					return scenario.bugs.map((bug, i) => {
+						return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
+					})
+				case 'CR':
+					return scenario.changeRequests.map((cr, i) => {
+						return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
+					})
+				default:
+					return <div>Artifact does not exist</div>
+			}
 		}
+
 	}
 
 	const changeArtifact = (e, artifact) => {
@@ -176,42 +180,42 @@ export default function View() {
 		e.target.classList.add('selected')
 		setArtifact(artifact)
 	}
-  
+
 	return (
 		<div className="content-container view">
-				<div className="info">
-					<h3>
-						<div>
-							Scenario Info
-						</div>	
-					</h3>
-					<div className="info-content">
-						{	loading ?
-							<div>
-								Loading...
-							</div> :
-							<>
-								<div className="infolet">Title: <br/> <span>{scenario.title || "N/A"}</span></div>
-								<div className="infolet">Description: <br/> <span>{scenario.description || "N/A"}</span></div>
-								<div className="infolet">Acceptance Criteria: <br/> <span>{scenario.acceptanceCriteria || "N/A"}</span></div>
-								<div className="infolet">Team Name: <br/> <span>{scenario.teamName || "N/A"}</span></div>
-								<div className="infolet">Status: <br/> <span>{scenario.status || "N/A"}</span></div>
-							</>
-						}
+			<div className="info">
+				<h3>
+					<div>
+						Scenario Info
 					</div>
+				</h3>
+				<div className="info-content">
+					{loading ?
+						<div>
+							Loading...
+						</div> :
+						<>
+							<div className="infolet">Title: <br /> <span>{scenario.title || "N/A"}</span></div>
+							<div className="infolet">Description: <br /> <span>{scenario.description || "N/A"}</span></div>
+							<div className="infolet">Acceptance Criteria: <br /> <span>{scenario.acceptanceCriteria || "N/A"}</span></div>
+							<div className="infolet">Team Name: <br /> <span>{scenario.teamName || "N/A"}</span></div>
+							<div className="infolet">Status: <br /> <span>{scenario.status || "N/A"}</span></div>
+						</>
+					}
 				</div>
-				<div className="artifacts">
-					<h3>
-						<div className='artifacts-tabs'>
-							<button className='selected' onClick={(e) => changeArtifact(e, 'US')}>User Stories</button>
-							<button onClick={(e) => changeArtifact(e, 'F')}>Features</button>
-							<button onClick={(e) => changeArtifact(e, 'B')}>Bugs</button>
-							<button onClick={(e) => changeArtifact(e, 'CR')}>CRs</button>
-						</div>
-					</h3>
-					<div className="artifacts-content">
-						<table className="table" style={{ marginTop: 20 }}>
-							<thead>
+			</div>
+			<div className="artifacts">
+				<h3>
+					<div className='artifacts-tabs'>
+						<button className='selected' onClick={(e) => changeArtifact(e, 'US')}>User Stories</button>
+						<button onClick={(e) => changeArtifact(e, 'F')}>Features</button>
+						<button onClick={(e) => changeArtifact(e, 'B')}>Bugs</button>
+						<button onClick={(e) => changeArtifact(e, 'CR')}>CRs</button>
+					</div>
+				</h3>
+				<div className="artifacts-content">
+					<table className="table" style={{ marginTop: 20 }}>
+						<thead>
 							<tr>
 								<th>Title</th>
 								<th>Description</th>
@@ -220,19 +224,20 @@ export default function View() {
 								<th>Team Name</th>
 								<th>Action</th>
 							</tr>
-							</thead>
-							<tbody>
-								{	loading ?
-									<tr>
-										<td colSpan="6">Loading...</td>
-									</tr>
-									:
-									artifactsList()
-								}
-							</tbody>
-						</table>
-					</div>
+						</thead>
+						<tbody>
+							{loading ?
+								<tr>
+									<td colSpan="6">Loading...</td>
+								</tr>
+								:
+								artifactsList()
+							}
+						</tbody>
+					</table>
 				</div>
+			</div>
 		</div>
 	)
+
 }

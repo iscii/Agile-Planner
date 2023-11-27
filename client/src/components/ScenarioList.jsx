@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { Link } from "react-router-dom"
-
+import { UserContext } from "../contexts/UserContext"
 const Scenario = (props) => (
   <tr>
     <td>{props.scenario.title}</td>
@@ -25,11 +25,15 @@ const Scenario = (props) => (
 
 export default function ScenarioList() {
   const [scenarios, setScenarios] = useState([])
+  const [userId, setUserId] = useState(null)
+  const { currentUser } = useContext(UserContext)
+  const id = currentUser.id
 
+  console.log(`Here is userId: ${id}`)
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await fetch(`http://localhost:3000/scenarios/:userId`)
+      const response = await fetch(`http://localhost:3000/scenarios/${id}`)
       console.log(response)
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`
@@ -94,7 +98,7 @@ export default function ScenarioList() {
 
   // This method will delete a scenario
   async function deleteScenario(id) {
-    await fetch(`http://localhost:3000/${id}`, {
+    await fetch(`http://localhost:3000/delete/${id}`, {
       method: "DELETE"
     })
 

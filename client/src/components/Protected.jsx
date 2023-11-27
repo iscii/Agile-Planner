@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext';
+import React, { useContext } from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
+import { UserContext } from '../contexts/UserContext'
 
 /** Protected route wrapper
  *  If authorized, return an outlet that will render child elements
@@ -8,8 +8,8 @@ import { UserContext } from '../contexts/UserContext';
  */
 
 const Protected = () => {
-  const {isLoggedIn} = useContext(UserContext);
-  return isLoggedIn() ? <Outlet /> : <Navigate to='/signin' replace={true} />;
-};
+  const { isLoggedIn } = useContext(UserContext)
+  return isLoggedIn() ? <Outlet /> : <Navigate to='/signin' replace={true} />
+}
 
-export default Protected;
+export default Protected

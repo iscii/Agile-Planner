@@ -12,7 +12,7 @@ scenarioRoutes.post('/login', async (req, res) => {
       const userID = await authenticateUser(email, password);
       // Set the user ID in session
       req.session.userId = userID;
-      res.json({ userID: userID });
+      res.json({ userId: userID });
   } catch (error) {
       res.status(401).send(error.message);  // 401 Unauthorized
   }
@@ -260,10 +260,12 @@ scenarioRoutes.get('/userStories/:scenarioID', async (req, res) => {
 
 scenarioRoutes.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  
   try {
     const userID = await authenticateUser(email, password);
     console.log("successfully logged in user with id: " + userID);
-    res.json({ userID: userID });
+    req.session.userId = userID;
+    res.json({ userId: userID });
   } catch (error) {
     res.status(401).send(error.message);  // 401 Unauthorized
   }
