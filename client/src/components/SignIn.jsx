@@ -8,7 +8,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const {setUserCookie} =  useContext(UserContext)
+  const { setUserCookie } = useContext(UserContext)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -18,14 +18,14 @@ const SignIn = () => {
       const response = await axios.post('http://localhost:3000/login', { email, password })
       console.log(response)
       console.log(`successfully logged in user ${email}`)
-      if(!response) throw "Error Signing in"
+      if (!response) throw "Error Signing in"
       const user = {
-        id: response.data.userID
+        id: response.data.userId
       }
 
-      setUserCookie(user);
+      setUserCookie(user)
 
-      navigate('/')
+      navigate('/scenarios')
       // Handle successful login, e.g., store user ID in state or localStorage
     } catch (error) {
       if (error.response.status === 401 || error.response.status === 404) {
@@ -49,7 +49,7 @@ const SignIn = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                />
+              />
             </label>
           </div>
           <div>
@@ -60,15 +60,15 @@ const SignIn = () => {
                 className="form-control"
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                />
+              />
             </label>
           </div>
           <div className='error-msg'>
-            { errorMessage && 
+            {errorMessage &&
               errorMessage
             }
-          </div> 
-          <input type='submit' value='Sign In' className="btn btn-primary mt-2" /> <br/>
+          </div>
+          <input type='submit' value='Sign In' className="btn btn-primary mt-2" /> <br />
         </form>
         <span className='link-msg'>Don't have an account? <Link to='/register'>Register</Link></span>
       </div>

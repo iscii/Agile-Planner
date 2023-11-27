@@ -26,10 +26,30 @@ const Scenario = (props) => (
 export default function ScenarioList() {
   const [scenarios, setScenarios] = useState([])
 
+  const [userId, setUserId] = useState(null)
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/get-user-id', {
+          credentials: 'include'
+        })
+        if (response.ok) {
+          const data = await response.json()
+          setUserId(data.userId)
+        }
+      } catch (error) {
+        console.error('Error fetching user ID:', error)
+      }
+    }
+
+    fetchUserId()
+  }, [])
+  console.log(`Here is userId: ${userId}`)
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await fetch(`http://localhost:3000/scenarios/:userId`)
+      const response = await fetch(`http://localhost:3000/scenarios/${userId}`)
       console.log(response)
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`
@@ -94,7 +114,7 @@ export default function ScenarioList() {
 
   // This method will delete a scenario
   async function deleteScenario(id) {
-    await fetch(`http://localhost:3000/${id}`, {
+    await fetch(`http://localhost:3000/delete/${id}`, {
       method: "DELETE"
     })
 
