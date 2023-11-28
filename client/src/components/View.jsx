@@ -3,6 +3,8 @@ import React, { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
+import { AuthContext } from "../contexts/AuthContext"
+import axios from "axios"
 const Artifact = (props) => (
 	<tr>
 		<td>{props.title}</td>
@@ -29,19 +31,22 @@ export default function View() {
 	const [scenario, setScenario] = useState([])
 	const [artifact, setArtifact] = useState('US')
 	const [loading, setLoading] = useState(true)
-	const params = useParams()
-	const currentUser = useContext(UserContext)
-	const id = currentUser.id
+	const { currentUser } = useContext(AuthContext)
+	const userId = currentUser ? currentUser.uid : "No user logged in"	//const currentUser = useContext(UserContext)
 
 	useEffect(() => {
 		async function getScenario() {
-			const response = await fetch(`http://localhost:3000/scenarios/${id}`)
-			if (!response.ok) {
-				const message = `An error occurred: ${response.statusText}`
-				window.alert(message)
+			try {
+				const response = await axios.get(`http://localhost:3000/scenarios/${userId}`)
+				console.log(response.data[0])
+				setScenario(response.data[0])
+				setLoading(false)
+			} catch (error) {
+				console.error(error)
+				window.alert(error)
 				return
 			}
-			const scenario = await response.json()
+			//const scenario = response
 			// const scenario = {
 			// 	_id: "65611cdb9bb01a63fe01563f",
 			// 	userId: '',
@@ -138,37 +143,65 @@ export default function View() {
 			// 		updatedAt: ''
 			// 	}]
 			// }
-			setScenario(scenario)
-			setLoading(false)
+
 		}
 		getScenario()
-	}, [id])
+	}, [userId])
 
+	// const artifactsList = () => {
+	// 	if (scenario.length > 0) {
+	// 		switch (artifact) {
+	// 			case 'US':
+	// 				return scenario.userStories.map((story, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
+	// 				})
+	// 			case 'F':
+	// 				return scenario.features.map((feature, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
+	// 				})
+	// 			case 'B':
+	// 				return scenario.bugs.map((bug, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
+	// 				})
+	// 			case 'CR':
+	// 				return scenario.changeRequests.map((cr, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
+	// 				})
+	// 			default:
+	// 				return <div>Artifact does not exist</div>
+	// 		}
+	// 	}
+
+	// }
 	const artifactsList = () => {
-		if (scenario.length > 0) {
+		if (scenario) {
 			switch (artifact) {
 				case 'US':
-					return scenario.userStories.map((story, i) => {
+					return (scenario.userStories || []).map((story, i) => {
 						return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
 					})
 				case 'F':
-					return scenario.features.map((feature, i) => {
+					return (scenario.features || []).map((feature, i) => {
 						return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
 					})
 				case 'B':
-					return scenario.bugs.map((bug, i) => {
+					return (scenario.bugs || []).map((bug, i) => {
 						return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
 					})
 				case 'CR':
-					return scenario.changeRequests.map((cr, i) => {
+					return (scenario.changeRequests || []).map((cr, i) => {
 						return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
 					})
 				default:
 					return <div>Artifact does not exist</div>
 			}
 		}
-
+		// Handle the case when scenario is undefined or null
+		return <div>No scenario available</div>
 	}
+
+
+
 
 	const changeArtifact = (e, artifact) => {
 		// clear classnames
@@ -192,7 +225,7 @@ export default function View() {
 				<div className="info-content">
 					{loading ?
 						<div>
-							Loading...
+							Awaiting New Data
 						</div> :
 						<>
 							<div className="infolet">Title: <br /> <span>{scenario.title || "N/A"}</span></div>

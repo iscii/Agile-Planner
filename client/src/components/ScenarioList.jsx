@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
+import { AuthContext } from "../contexts/AuthContext"
+import axios from "axios"
 const Scenario = (props) => (
   <tr>
     <td>{props.scenario.title}</td>
@@ -11,6 +13,11 @@ const Scenario = (props) => (
     <td>
       <Link className="btn btn-link" to={`/view/${props.scenario._id}`}>View</Link> |
       <Link className="btn btn-link" to={`/edit/${props.scenario._id}`}>Edit</Link> |
+      <Link className="btn btn-link" to={`/updatebug/${props.scenario._id}`}>Bug</Link> |
+      <Link className="btn btn-link" to={`/updatecr/${props.scenario._id}`}>Change Request</Link> |
+      <Link className="btn btn-link" to={`/updatefeature/${props.scenario._id}`}>Feature</Link> |
+      <Link className="btn btn-link" to={`/updateus/${props.scenario._id}`}>User Story</Link> |
+
       <button
         className="btn btn-link"
         onClick={() => {
@@ -25,22 +32,22 @@ const Scenario = (props) => (
 
 export default function ScenarioList() {
   const [scenarios, setScenarios] = useState([])
-  const [userId, setUserId] = useState(null)
-  const { currentUser } = useContext(UserContext)
-  const id = currentUser.id
+  //const [userId, setUserId] = useState(null)
+  const { currentUser } = useContext(AuthContext)
+  const userId = currentUser ? currentUser.uid : "No user logged in"
 
-  console.log(`Here is userId: ${id}`)
+  console.log(`Here is userId: ${userId}`)
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await fetch(`http://localhost:3000/scenarios/${id}`)
-      console.log(response)
-      if (!response.ok) {
+      const response = await axios.get(`http://localhost:3000/scenarios/${userId}`)
+      console.log(response.data)
+      if (!response.status == 200) {
         const message = `An error occurred: ${response.statusText}`
         window.alert(message)
         return
       }
-      const scenarios = await response.json()
+      //const scenarios = await response.json()
       // const scenarios = [ //NOTE: MOCK DATA. REMOVE WHEN USER AUTH IS SET UP
       //   {
       //     _id: "65611ac49bb01a63fe01563c",
@@ -91,7 +98,7 @@ export default function ScenarioList() {
       //     userStories: []
       //   }
       // ]
-      setScenarios(scenarios)
+      setScenarios(response.data)
     }
     getScenarios()
   }, [scenarios.length])

@@ -108,7 +108,11 @@ export const updateBugs = async (
 };
 
 
-export const updateFeatures = async (scenarioID, feature, title, acceptanceCriteria, status) => {
+export const updateFeatures = async (scenarioID,
+  title,
+  description,
+  status,
+  acceptanceCriteria) => {
   const scenarioCollection = await scenarios();
   const existingScenario = await get(scenarioID);
 
@@ -119,8 +123,8 @@ export const updateFeatures = async (scenarioID, feature, title, acceptanceCrite
   const newFeature = { 
     _id: new ObjectId(),
     scenarioID: scenarioID, 
-    feature: feature,
     title: title,
+    description: description,
     status: status,
     acceptanceCriteria: acceptanceCriteria
   };
@@ -136,7 +140,11 @@ export const updateFeatures = async (scenarioID, feature, title, acceptanceCrite
 };
 
 
-export const changeRequests = async (scenarioID, changeRequest,title, acceptanceCriteria, status) => {
+export const changeRequests = async (scenarioID,
+  title,
+  description,
+  status,
+  acceptanceCriteria) => {
   const scenarioCollection = await scenarios();
   const existingScenario = await get(scenarioID);
 
@@ -148,9 +156,9 @@ export const changeRequests = async (scenarioID, changeRequest,title, acceptance
     _id: new ObjectId(), 
     scenarioID: scenarioID,
     title: title,
-    changeRequest: changeRequest,
-    acceptanceCriteria, acceptanceCriteria,
-    status: status
+    description: description,    
+    status: status,
+    acceptanceCriteria: acceptanceCriteria
   };
 
   const newCRArray = existingScenario.changeRequests.concat(newCR);
@@ -164,7 +172,11 @@ export const changeRequests = async (scenarioID, changeRequest,title, acceptance
 };
 
 
-export const updateUserStories = async (scenarioID, userStory,title, acceptanceCriteria, status) => {
+export const updateUserStories = async (scenarioID,
+  title,
+  description,
+  status,
+  acceptanceCriteria) => {
   const scenarioCollection = await scenarios();
   const existingScenario = await get(scenarioID);
 
@@ -176,9 +188,9 @@ export const updateUserStories = async (scenarioID, userStory,title, acceptanceC
     _id: new ObjectId(), 
     scenarioID: scenarioID,
     title: title,
-    userStory: userStory, 
-    acceptanceCriteria: acceptanceCriteria,
-    status: status
+    description: description, 
+    status: status,
+    acceptanceCriteria: acceptanceCriteria
   };
 
   const newUSArray = existingScenario.userStories.concat(newUS);
