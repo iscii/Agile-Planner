@@ -18,6 +18,10 @@ import Logout from "./components/Logout"
 //import { UserProvider } from "./contexts/UserContext"
 import { AuthProvider } from "./contexts/AuthContext"
 import "./style/main.scss"
+import Bug from "./components/Bug"
+import ChangeRequest from "./components/ChangeRequest"
+import Feature from "./components/Feature"
+import UserStory from "./components/UserStory"
 
 
 const App = () => {
@@ -33,9 +37,13 @@ const App = () => {
           <Route path="/scenarios" element={<ScenarioList />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/create" element={<Create />} />
-          <Route path="/view" element={<View />} />
+          <Route path="/view/:id" element={<View />} />
           <Route path="/view/:id/:artifact/:artifactId" element={<Artifact />} />
-          <Route path="*" element={<ScenarioList />} />
+          <Route path="/updatebug/:id" element={<Bug />} />
+          <Route path="/updatecr/:id" element={<ChangeRequest />} />
+          <Route path="/updatefeature/:id" element={<Feature />} />
+          <Route path="/updateus/:id" element={<UserStory />} />
+          <Route path="*" element={<FireBaseLogin />} />
         </Routes>
       </div>
     </AuthProvider>

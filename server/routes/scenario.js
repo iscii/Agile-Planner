@@ -51,6 +51,7 @@ scenarioRoutes.route("/scenario/add").post(async function (req, response) {
       userId: req.body.userId,
       title: req.body.title,
       description: req.body.description,
+      status: req.body.status,
       acceptanceCriteria: req.body.acceptanceCriteria,
       teamName: req.body.teamName,
       bugs: [],
@@ -77,6 +78,7 @@ scenarioRoutes.route("/edit/:id").post(async function (req, response) {
         userId: req.body.userId,
         title: req.body.title,
         description: req.body.description,
+        status: req.body.status,
         acceptanceCriteria: req.body.acceptanceCriteria,
         teamName: req.body.teamName,
       },
@@ -179,8 +181,9 @@ scenarioRoutes.route("/scenario/:id/features").get(async function (req, res) {
   }
 });
 
-scenarioRoutes.post('/updateBugs', async (req, res) => {
-  const { scenarioID, title, description, status, acceptanceCriteria } = req.body;
+scenarioRoutes.post('/updateBugs/:scenarioID', async (req, res) => {
+  const { title, description, status, acceptanceCriteria } = req.body;
+  const scenarioID = req.params.scenarioID
   try {
     const updatedScenario = await updateBugs(scenarioID, title, description, status, acceptanceCriteria);
     res.json(updatedScenario);
@@ -189,31 +192,34 @@ scenarioRoutes.post('/updateBugs', async (req, res) => {
   }
 });
 
-scenarioRoutes.post('/updateFeatures', async (req, res) => {
-  const { scenarioID, feature, title, acceptanceCriteria, status } = req.body;
+scenarioRoutes.post('/updateFeatures/:scenarioID', async (req, res) => {
+  const { title, description, status, acceptanceCriteria } = req.body;
+  const scenarioID = req.params.scenarioID;
   try {
-    const updatedScenario = await updateFeatures(scenarioID, feature, title, acceptanceCriteria, status);
+    const updatedScenario = await updateFeatures(scenarioID, title, description, status,acceptanceCriteria);
     res.json(updatedScenario);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-scenarioRoutes.post('/changeRequests', async (req, res) => {
-  const { scenarioID, changeRequest, title, acceptanceCriteria, status } = req.body;
+scenarioRoutes.post('/updateChangeRequests/:scenarioID', async (req, res) => {
+  const { title, description, status, acceptanceCriteria } = req.body;
+  const scenarioID = req.params.scenarioID;
   try {
-    const updatedScenario = await changeRequests(scenarioID, changeRequest, title, acceptanceCriteria, status);
+    const updatedScenario = await changeRequests(scenarioID, title, description, status,acceptanceCriteria);
     res.json(updatedScenario);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-scenarioRoutes.post('/updateUserStories', async (req, res) => {
-  const { scenarioID, userStory, title, acceptanceCriteria, status } = req.body;
+scenarioRoutes.post('/updateUserStories/:scenarioID', async (req, res) => {
+  const { title, description, status, acceptanceCriteria } = req.body;
+  const scenarioID = req.params.scenarioID;
   try {
-    const updatedScenario = await updateUserStories(scenarioID, userStory, title, acceptanceCriteria, status);
-    res.json(updatedScenario);
+    const updatedScenario = await updateUserStories(scenarioID, title, description, status,acceptanceCriteria);
+    return res.json(updatedScenario);
   } catch (error) {
     res.status(500).send(error.message);
   }

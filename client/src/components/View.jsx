@@ -37,9 +37,9 @@ export default function View() {
 	useEffect(() => {
 		async function getScenario() {
 			try {
-				const response = await axios.get('http://localhost:3000/scenarios/V5ClMbemUMYR8BSpifflu8e18pJ3')
-				console.log(response.data)
-				setScenario(response.data)
+				const response = await axios.get(`http://localhost:3000/scenarios/${userId}`)
+				console.log(response.data[0])
+				setScenario(response.data[0])
 				setLoading(false)
 			} catch (error) {
 				console.error(error)

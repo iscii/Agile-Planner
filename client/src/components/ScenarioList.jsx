@@ -13,6 +13,11 @@ const Scenario = (props) => (
     <td>
       <Link className="btn btn-link" to={`/view/${props.scenario._id}`}>View</Link> |
       <Link className="btn btn-link" to={`/edit/${props.scenario._id}`}>Edit</Link> |
+      <Link className="btn btn-link" to={`/updatebug/${props.scenario._id}`}>Bug</Link> |
+      <Link className="btn btn-link" to={`/updatecr/${props.scenario._id}`}>Change Request</Link> |
+      <Link className="btn btn-link" to={`/updatefeature/${props.scenario._id}`}>Feature</Link> |
+      <Link className="btn btn-link" to={`/updateus/${props.scenario._id}`}>User Story</Link> |
+
       <button
         className="btn btn-link"
         onClick={() => {

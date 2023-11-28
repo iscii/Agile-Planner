@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { doCreateUserWithEmailAndPassword } from '../firebase/fbFunctions.jsx'
-import { AuthContext } from '../contexts/AuthContext.jsx'
-import { useNavigate } from 'react-router-dom'
+//import { AuthContext } from '../contexts/AuthContext.jsx'
+import { useNavigate, Link } from 'react-router-dom'
 
 function FireBaseRegister() {
-  const { currentUser } = useContext(AuthContext)
+  //const { currentUser } = useContext(AuthContext)
   const [pwMatch, setPwMatch] = useState('')
   const navigate = useNavigate()
   const handleSignUp = async (e) => {
@@ -28,54 +28,54 @@ function FireBaseRegister() {
 
   return (
 
-    <div>
+    <div className='content-container register'>
       <h1>Sign Up</h1>
-      {pwMatch && <h4>{pwMatch}</h4>}
-      <form onSubmit={handleSignUp}>
-        <label>
-          Email:
-          <input
-            required
-            name='email'
-            type='email'
-            placeholder='Email'
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            required
-            name='passwordOne'
-            type='password'
-            placeholder='Password'
-            autoComplete='off'
-          />
-        </label>
+      <div className='register-form'>
+        {pwMatch && <h4>{pwMatch}</h4>}
+        <form onSubmit={handleSignUp}>
+          <div>
+            <label>
+              Email:
+              <input
+                className='form-control'
+                required
+                name='email'
+                type='email'
+                placeholder='Email'
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Password:
+              <input
+                required
+                className='form-control'
+                name='passwordOne'
+                type='password'
+                placeholder='Password'
+                autoComplete='off'
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Confirm Password:
+              <input
+                required
+                className='form-control'
+                name='passwordTwo'
+                type='password'
+                placeholder='Confirm Password'
+                autoComplete='off'
+              />
+            </label>
+          </div>
 
-        <label>
-          Confirm Password:
-          <input
-            required
-            name='passwordTwo'
-            type='password'
-            placeholder='Confirm Password'
-            autoComplete='off'
-          />
-        </label>
-
-        <button
-          id='submitButton'
-          name='submitButton'
-          type='submit'
-        >
-          Sign Up
-        </button>
-
-
-      </form>
-
-
-
+          <input type='submit' value='Register' className="btn btn-primary mt-1" /> <br />
+        </form>
+        <span className='link-msg'>Already have an account? <Link to='/signin'>Sign In</Link></span>
+      </div>
     </div>
   )
 

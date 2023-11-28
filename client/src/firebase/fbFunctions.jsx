@@ -11,10 +11,10 @@ import {
   // reauthenticateWithCredential
 } from 'firebase/auth'
 
-async function doCreateUserWithEmailAndPassword(email, password) {
+async function doCreateUserWithEmailAndPassword(email, password, displayName) {
   const auth = getAuth()
   await createUserWithEmailAndPassword(auth, email, password)
-  await updateProfile(auth.currentUser)
+  await updateProfile(auth.currentUser, { displayName: displayName })
 }
 
 async function doSignInWithEmailAndPassword(email, password) {
