@@ -106,7 +106,7 @@ export default function ChangeRequests() {
           <div className="form-group">
             <input
               type="submit"
-              value="Update Scenario"
+              value="Update Change Request"
               className="btn btn-primary mt-4"
             />
           </div>

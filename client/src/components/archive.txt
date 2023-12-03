@@ -1,0 +1,177 @@
+//const scenario = response
+			// const scenario = {
+			// 	_id: "65611cdb9bb01a63fe01563f",
+			// 	userId: '',
+			// 	title: 'abc1',
+			// 	description: 'abc1',
+			// 	acceptanceCriteria: 'abc',
+			// 	teamName: '',
+			// 	bugs: [{
+			// 		_id: "1",
+			// 		userId: '',
+			// 		title: 'bug1',
+			// 		description: 'bug1',
+			// 		acceptanceCriteria: 'bug1',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	},
+			// 	{
+			// 		_id: "2",
+			// 		userId: '',
+			// 		title: 'bug2',
+			// 		description: 'bug2',
+			// 		acceptanceCriteria: 'bug2',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	}],
+			// 	changeRequests: [{
+			// 		_id: "1",
+			// 		userId: '',
+			// 		title: 'cr1',
+			// 		description: 'cr1',
+			// 		acceptanceCriteria: 'cr1',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	},
+			// 	{
+			// 		_id: "2",
+			// 		userId: '',
+			// 		title: 'cr2',
+			// 		description: 'cr2',
+			// 		acceptanceCriteria: 'cr2',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	}],
+			// 	features: [{
+			// 		_id: "1",
+			// 		userId: '',
+			// 		title: 'f1',
+			// 		description: 'f1',
+			// 		acceptanceCriteria: 'f1',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	},
+			// 	{
+			// 		_id: "2",
+			// 		userId: '',
+			// 		title: 'f2',
+			// 		description: 'f2',
+			// 		acceptanceCriteria: 'f2',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	}],
+			// 	userStories: [{
+			// 		_id: "1",
+			// 		userId: '',
+			// 		title: 'us1',
+			// 		description: 'us1',
+			// 		acceptanceCriteria: 'us1',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	},
+			// 	{
+			// 		_id: "2",
+			// 		userId: '',
+			// 		title: 'us2',
+			// 		description: 'us2',
+			// 		acceptanceCriteria: 'us2',
+			// 		teamName: '',
+			// 		comments: [],
+			// 		createdAt: '',
+			// 		updatedAt: ''
+			// 	}]
+			// }
+
+
+      // const artifactsList = () => {
+	// 	if (scenario.length > 0) {
+	// 		switch (artifact) {
+	// 			case 'US':
+	// 				return scenario.userStories.map((story, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
+	// 				})
+	// 			case 'F':
+	// 				return scenario.features.map((feature, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
+	// 				})
+	// 			case 'B':
+	// 				return scenario.bugs.map((bug, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
+	// 				})
+	// 			case 'CR':
+	// 				return scenario.changeRequests.map((cr, i) => {
+	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
+	// 				})
+	// 			default:
+	// 				return <div>Artifact does not exist</div>
+	// 		}
+	// 	}
+
+	// }
+
+
+	//const scenarios = await response.json()
+      // const scenarios = [ //NOTE: MOCK DATA. REMOVE WHEN USER AUTH IS SET UP
+      //   {
+      //     _id: "65611ac49bb01a63fe01563c",
+      //     userId: '',
+      //     title: 'dwad',
+      //     description: 'awdaw',
+      //     acceptanceCriteria: 'awdaw',
+      //     teamName: '',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   },
+      //   {
+      //     _id: "65611ad09bb01a63fe01563d",
+      //     userId: '',
+      //     title: 'ewadaw',
+      //     description: 'dawd',
+      //     acceptanceCriteria: 'awd',
+      //     teamName: 'awd',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   },
+      //   {
+      //     _id: "65611c3e9bb01a63fe01563e",
+      //     userId: '',
+      //     title: 'dawd',
+      //     description: 'awdwa',
+      //     acceptanceCriteria: 'awdaw',
+      //     teamName: 'daw',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   },
+      //   {
+      //     _id: "65611cdb9bb01a63fe01563f",
+      //     userId: '',
+      //     title: 'abc1',
+      //     description: 'abc1',
+      //     acceptanceCriteria: 'abc',
+      //     teamName: '',
+      //     bugs: [],
+      //     changeRequests: [],
+      //     features: [],
+      //     userStories: []
+      //   }
+      // ]

@@ -1,15 +1,31 @@
-import { useContext } from 'react';
-import { Navigate } from 'react-router-dom'
-import { UserContext } from '../contexts/UserContext';
-import Cookies from 'js-cookie'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from '../contexts/AuthContext'
+import { doSignOut } from '../firebase/fbFunctions'
+import { useNavigate } from 'react-router-dom'
 
 const Logout = () => {
-    const { setUserCookie } = useContext(UserContext);
-    
-    setUserCookie({});
-    
-    Cookies.remove('auth');
-    return  <Navigate to='/' replace={true} />;
+    const { currentUser } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const signOutAndNavigate = async () => {
+            try {
+                await doSignOut()
+            } catch (error) {
+                // handle error
+            }
+            navigate('/')
+        }
+
+        if (currentUser) {
+            signOutAndNavigate()
+        } else {
+            navigate('/')
+        }
+    }, [currentUser, navigate])
+
+    // No button is rendered
+    return null
 }
 
 export default Logout

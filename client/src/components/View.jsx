@@ -1,239 +1,129 @@
 import React, { useEffect, useState, useContext } from "react"
-// import scenario provider from context
-import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { UserContext } from "../contexts/UserContext"
-import { AuthContext } from "../contexts/AuthContext"
+import { Link, useParams } from "react-router-dom"
 import axios from "axios"
-const Artifact = (props) => (
-	<tr>
-		<td>{props.title}</td>
-		<td>{props.description}</td>
-		<td>{props.status}</td>
-		<td>{props.acceptanceCriteria}</td>
-		<td>{props.teamName}</td>
-		<td>
-			<Link className="btn btn-link" to={`/view/${props.scenarioId}/${props.artifact}/${props._id}`}>Edit</Link> |
-			<button
-				className="btn btn-link"
-				onClick={() => {
-					props.deleteScenario(props.scenario._id)
-				}}
-			>
-				Delete
-			</button>
-		</td>
-	</tr>
-)
+import { AuthContext } from "../contexts/AuthContext"
+
+const Artifact = (props) => {
+	// Determine the route based on the artifact type
+	let editRoute
+	switch (props.artifact) {
+		case 'US':
+			editRoute = `/updateus/${props.scenarioId}`
+			break
+		case 'F':
+			editRoute = `/updatefeature/${props.scenarioId}`
+			break
+		case 'B':
+			editRoute = `/updatebug/${props.scenarioId}`
+			break
+		case 'CR':
+			editRoute = `/updatecr/${props.scenarioId}`
+			break
+		default:
+			editRoute = '' // default route or handle the case when the artifact type is unknown
+	}
+
+	return (
+		<tr>
+			<td>{props.title}</td>
+			<td>{props.description}</td>
+			<td>{props.status}</td>
+			<td>{props.acceptanceCriteria}</td>
+			<td>{props.teamName}</td>
+			<td>
+				<Link className="btn btn-link" to={editRoute}>Edit</Link>
+				{/* |
+				<button
+					className="btn btn-link"
+					onClick={() => {
+						props.deleteScenario(props.scenarioId)
+					}}
+				>
+					Delete
+				</button> */}
+			</td>
+		</tr>
+	)
+}
+
 
 export default function View() {
-	// This following section will display the table with the scenarios.
-	const [scenario, setScenario] = useState([])
+	const [scenario, setScenario] = useState(null)
 	const [artifact, setArtifact] = useState('US')
 	const [loading, setLoading] = useState(true)
-	const { currentUser } = useContext(AuthContext)
-	const userId = currentUser ? currentUser.uid : "No user logged in"	//const currentUser = useContext(UserContext)
+	const { id } = useParams()
 
 	useEffect(() => {
 		async function getScenario() {
 			try {
-				const response = await axios.get(`http://localhost:3000/scenarios/${userId}`)
-				console.log(response.data[0])
-				setScenario(response.data[0])
+				const response = await axios.get(`http://localhost:3000/scenario/${id}`)
+				setScenario(response.data)
 				setLoading(false)
 			} catch (error) {
 				console.error(error)
 				window.alert(error)
-				return
 			}
-			//const scenario = response
-			// const scenario = {
-			// 	_id: "65611cdb9bb01a63fe01563f",
-			// 	userId: '',
-			// 	title: 'abc1',
-			// 	description: 'abc1',
-			// 	acceptanceCriteria: 'abc',
-			// 	teamName: '',
-			// 	bugs: [{
-			// 		_id: "1",
-			// 		userId: '',
-			// 		title: 'bug1',
-			// 		description: 'bug1',
-			// 		acceptanceCriteria: 'bug1',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	},
-			// 	{
-			// 		_id: "2",
-			// 		userId: '',
-			// 		title: 'bug2',
-			// 		description: 'bug2',
-			// 		acceptanceCriteria: 'bug2',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	}],
-			// 	changeRequests: [{
-			// 		_id: "1",
-			// 		userId: '',
-			// 		title: 'cr1',
-			// 		description: 'cr1',
-			// 		acceptanceCriteria: 'cr1',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	},
-			// 	{
-			// 		_id: "2",
-			// 		userId: '',
-			// 		title: 'cr2',
-			// 		description: 'cr2',
-			// 		acceptanceCriteria: 'cr2',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	}],
-			// 	features: [{
-			// 		_id: "1",
-			// 		userId: '',
-			// 		title: 'f1',
-			// 		description: 'f1',
-			// 		acceptanceCriteria: 'f1',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	},
-			// 	{
-			// 		_id: "2",
-			// 		userId: '',
-			// 		title: 'f2',
-			// 		description: 'f2',
-			// 		acceptanceCriteria: 'f2',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	}],
-			// 	userStories: [{
-			// 		_id: "1",
-			// 		userId: '',
-			// 		title: 'us1',
-			// 		description: 'us1',
-			// 		acceptanceCriteria: 'us1',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	},
-			// 	{
-			// 		_id: "2",
-			// 		userId: '',
-			// 		title: 'us2',
-			// 		description: 'us2',
-			// 		acceptanceCriteria: 'us2',
-			// 		teamName: '',
-			// 		comments: [],
-			// 		createdAt: '',
-			// 		updatedAt: ''
-			// 	}]
-			// }
-
 		}
 		getScenario()
-	}, [userId])
+	}, [id])
 
-	// const artifactsList = () => {
-	// 	if (scenario.length > 0) {
-	// 		switch (artifact) {
-	// 			case 'US':
-	// 				return scenario.userStories.map((story, i) => {
-	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
-	// 				})
-	// 			case 'F':
-	// 				return scenario.features.map((feature, i) => {
-	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
-	// 				})
-	// 			case 'B':
-	// 				return scenario.bugs.map((bug, i) => {
-	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
-	// 				})
-	// 			case 'CR':
-	// 				return scenario.changeRequests.map((cr, i) => {
-	// 					return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
-	// 				})
-	// 			default:
-	// 				return <div>Artifact does not exist</div>
-	// 		}
-	// 	}
-
-	// }
 	const artifactsList = () => {
-		if (scenario) {
-			switch (artifact) {
-				case 'US':
-					return (scenario.userStories || []).map((story, i) => {
-						return <Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
-					})
-				case 'F':
-					return (scenario.features || []).map((feature, i) => {
-						return <Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
-					})
-				case 'B':
-					return (scenario.bugs || []).map((bug, i) => {
-						return <Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
-					})
-				case 'CR':
-					return (scenario.changeRequests || []).map((cr, i) => {
-						return <Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
-					})
-				default:
-					return <div>Artifact does not exist</div>
-			}
+		if (!scenario) return null // Ensure scenario is loaded
+
+		let artifacts
+		switch (artifact) {
+			case 'US':
+				artifacts = scenario.userStories?.map((story, i) => (
+					<Artifact scenarioId={scenario._id} artifact={artifact} {...story} key={i} />
+				))
+				break
+			case 'F':
+				artifacts = scenario.features?.map((feature, i) => (
+					<Artifact scenarioId={scenario._id} artifact={artifact} {...feature} key={i} />
+				))
+				break
+			case 'B':
+				artifacts = scenario.bugs?.map((bug, i) => (
+					<Artifact scenarioId={scenario._id} artifact={artifact} {...bug} key={i} />
+				))
+				break
+			case 'CR':
+				artifacts = scenario.changeRequests?.map((cr, i) => (
+					<Artifact scenarioId={scenario._id} artifact={artifact} {...cr} key={i} />
+				))
+				break
+			default:
+				artifacts = <div>Artifact does not exist</div>
 		}
-		// Handle the case when scenario is undefined or null
-		return <div>No scenario available</div>
+		return <>{artifacts}</>
 	}
 
 
-
-
-	const changeArtifact = (e, artifact) => {
-		// clear classnames
-		// set classname to selected
+	const changeArtifact = (e, newArtifact) => {
 		const tabs = document.querySelectorAll('.artifacts-tabs button')
 		tabs.forEach(tab => {
 			tab.classList.remove('selected')
 		})
 		e.target.classList.add('selected')
-		setArtifact(artifact)
+		setArtifact(newArtifact)
 	}
 
 	return (
 		<div className="content-container view">
 			<div className="info">
-				<h3>
-					<div>
-						Scenario Info
-					</div>
-				</h3>
+				<h3>Scenario Info</h3>
 				<div className="info-content">
 					{loading ?
-						<div>
-							Awaiting New Data
-						</div> :
-						<>
-							<div className="infolet">Title: <br /> <span>{scenario.title || "N/A"}</span></div>
-							<div className="infolet">Description: <br /> <span>{scenario.description || "N/A"}</span></div>
-							<div className="infolet">Acceptance Criteria: <br /> <span>{scenario.acceptanceCriteria || "N/A"}</span></div>
-							<div className="infolet">Team Name: <br /> <span>{scenario.teamName || "N/A"}</span></div>
-							<div className="infolet">Status: <br /> <span>{scenario.status || "N/A"}</span></div>
-						</>
+						<div>Awaiting New Data</div> :
+						scenario && (
+							<>
+								<div className="infolet">Title: <br /><span>{scenario.title || "N/A"}</span></div>
+								<div className="infolet">Description: <br /><span>{scenario.description || "N/A"}</span></div>
+								<div className="infolet">Acceptance Criteria: <br /><span>{scenario.acceptanceCriteria || "N/A"}</span></div>
+								{/* <div className="infolet">Team Name: <br /><span>{scenario.teamName || "N/A"}</span></div> */}
+								<div className="infolet">Status: <br /><span>{scenario.status || "N/A"}</span></div>
+							</>
+						)
 					}
 				</div>
 			</div>
@@ -254,16 +144,11 @@ export default function View() {
 								<th>Description</th>
 								<th>Status</th>
 								<th>Acceptance Criteria</th>
-								<th>Team Name</th>
-								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							{loading ?
-								<tr>
-									<td colSpan="6">Loading...</td>
-								</tr>
-								:
+								<tr><td colSpan="6">Loading...</td></tr> :
 								artifactsList()
 							}
 						</tbody>
@@ -272,5 +157,4 @@ export default function View() {
 			</div>
 		</div>
 	)
-
 }

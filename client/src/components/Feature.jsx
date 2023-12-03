@@ -106,7 +106,7 @@ export default function Feature() {
           <div className="form-group">
             <input
               type="submit"
-              value="Update Scenario"
+              value="Update Feature"
               className="btn btn-primary mt-4"
             />
           </div>
