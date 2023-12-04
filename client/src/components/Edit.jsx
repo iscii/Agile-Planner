@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useParams, useNavigate } from "react-router"
 import { AuthContext } from "../contexts/AuthContext"
+import { baseUrl } from "../api/config"
 
 export default function Edit() {
   const { currentUser } = useContext(AuthContext)
@@ -17,7 +18,7 @@ export default function Edit() {
   useEffect(() => {
     async function fetchData() {
       const id = params.id.toString()
-      const response = await fetch(`http://localhost:3000/scenario/${params.id}`)
+      const response = await fetch(`${baseUrl}/scenario/${params.id}`)
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`
         window.alert(message)
@@ -50,7 +51,7 @@ export default function Edit() {
       teamName: form.teamName
     }
     // This will send a post request to update the data in the database.
-    await fetch(`http://localhost:3000/update/${params.id}`, {
+    await fetch(`${baseUrl}/update/${params.id}`, {
       method: "POST",
       body: JSON.stringify(editedPerson),
       headers: {

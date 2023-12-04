@@ -3,6 +3,7 @@ import SignIn from './SignIn' // Import your SignIn component
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { baseUrl } from "../api/config"
 
 const Register = () => {
   const [email, setEmail] = useState('')
@@ -14,7 +15,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:3000/createUser', { userName, email, password })
+      const response = await axios.post('${baseUrl}/createUser', { userName, email, password })
       console.log(response)
       console.log(`successfully registered user ${userName}`)
       setIsRegistered(true) // Set true to switch to SignIn view on successful registration

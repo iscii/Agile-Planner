@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
 import { AuthContext } from "../contexts/AuthContext"
 import axios from "axios"
+import { baseUrl } from "../api/config"
+
 const Scenario = (props) => (
   <tr>
     <td>{props.scenario.title}</td>
@@ -41,7 +43,7 @@ export default function ScenarioList() {
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
-      const response = await axios.get(`http://localhost:3000/scenarios/${userId}`)
+      const response = await axios.get(`${baseUrl}/scenarios/${userId}`)
       // console.log(response.data)
       if (!response.status == 200) {
         const message = `An error occurred: ${response.statusText}`
@@ -56,7 +58,7 @@ export default function ScenarioList() {
 
   // This method will delete a scenario
   async function deleteScenario(id) {
-    await fetch(`http://localhost:3000/delete/${id}`, {
+    await fetch(`${baseUrl}/delete/${id}`, {
       method: "DELETE"
     })
 

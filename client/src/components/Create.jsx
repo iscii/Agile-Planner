@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router"
 import { AuthContext } from "../contexts/AuthContext"
+import { baseUrl } from "../api/config"
 
 
 export default function Create() {
@@ -27,7 +28,7 @@ export default function Create() {
     e.preventDefault()
     // When a post request is sent to the create url, we'll add a new record to the database.
     const newScenario = { ...form }
-    await fetch("http://localhost:3000/scenario/add", {
+    await fetch("${baseUrl}/scenario/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
