@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../contexts/AuthContext"
+import { baseUrl } from "../api/config"
 
 export default function Content() {
   // This following section will display the table with the scenarios.
@@ -21,7 +22,7 @@ export default function Content() {
   // but then we dunno which array to render from.
   useEffect(() => {
     async function getScenario() {
-      const response = await fetch(`http://localhost:3000/scenarios/${userId}`)
+      const response = await fetch(`${baseUrl}/scenarios/${userId}`)
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`
         window.alert(message)

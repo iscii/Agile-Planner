@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react"
 import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import { AuthContext } from "../contexts/AuthContext"
+import { baseUrl } from "../api/config"
 
 const Artifact = (props) => {
 	// Determine the route based on the artifact type
@@ -55,7 +56,7 @@ export default function View() {
 	useEffect(() => {
 		async function getScenario() {
 			try {
-				const response = await axios.get(`http://localhost:3000/scenario/${id}`)
+				const response = await axios.get(`${baseUrl}/scenario/${id}`)
 				setScenario(response.data)
 				setLoading(false)
 			} catch (error) {

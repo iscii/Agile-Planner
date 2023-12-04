@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
+import { baseUrl } from "../api/config"
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
@@ -15,7 +16,7 @@ const SignIn = () => {
     e.preventDefault()
 
     try {
-      const response = await axios.post('http://localhost:3000/login', { email, password })
+      const response = await axios.post('${baseUrl}/login', { email, password })
       console.log(response)
       console.log(`successfully logged in user ${email}`)
       if (!response) throw "Error Signing in"
