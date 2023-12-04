@@ -1,4 +1,3 @@
-// import {users} from '/Users/charlierome/Library/CloudStorage/GoogleDrive-jnatc1@gmail.com/My Drive/CS 545/CS-545-Project_v2/server/config/mongoCollections.js'
 import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import bcrypt from 'bcrypt';
