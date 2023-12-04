@@ -12,12 +12,7 @@ const Scenario = (props) => (
     <td>{props.scenario.teamName}</td>
     <td>
       <Link className="btn btn-link" to={`/view/${props.scenario._id}`}>View</Link> |
-      <Link className="btn btn-link" to={`/edit/${props.scenario._id}`}>Edit</Link> |
-      <Link className="btn btn-link" to={`/updatebug/${props.scenario._id}`}>Bug</Link> |
-      <Link className="btn btn-link" to={`/updatecr/${props.scenario._id}`}>Change Request</Link> |
-      <Link className="btn btn-link" to={`/updatefeature/${props.scenario._id}`}>Feature</Link> |
-      <Link className="btn btn-link" to={`/updateus/${props.scenario._id}`}>User Story</Link> |
-
+      <Link className="btn btn-link" to={`/edit/${props.scenario._id}`}>Edit</Link>
       {/* <button
         className="btn btn-link"
         onClick={() => {
@@ -26,6 +21,12 @@ const Scenario = (props) => (
       >
         Delete
       </button> */}
+    </td>
+    <td>
+      <Link className="btn btn-link" to={`/updateus/${props.scenario._id}`}>User Story</Link> |
+      <Link className="btn btn-link" to={`/updatefeature/${props.scenario._id}`}>Feature</Link> |
+      <Link className="btn btn-link" to={`/updatebug/${props.scenario._id}`}>Bug</Link> |
+      <Link className="btn btn-link" to={`/updatecr/${props.scenario._id}`}>Change Request</Link>
     </td>
   </tr>
 )
@@ -36,12 +37,12 @@ export default function ScenarioList() {
   const { currentUser } = useContext(AuthContext)
   const userId = currentUser ? currentUser.uid : "No user logged in"
 
-  console.log(`Here is userId: ${userId}`)
+  // console.log(`Here is userId: ${userId}`)
   // This method fetches the scenarios from the database.
   useEffect(() => {
     async function getScenarios() {
       const response = await axios.get(`http://localhost:3000/scenarios/${userId}`)
-      console.log(response.data)
+      // console.log(response.data)
       if (!response.status == 200) {
         const message = `An error occurred: ${response.statusText}`
         window.alert(message)
@@ -89,7 +90,8 @@ export default function ScenarioList() {
               <th>Status</th>
               <th>Acceptance Criteria</th>
               <th>Team Name</th>
-              <th>Action</th>
+              <th className="actions">Action</th>
+              <th className="actions">Create</th>
             </tr>
           </thead>
           <tbody>{scenarioList()}</tbody>

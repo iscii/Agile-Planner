@@ -34,45 +34,45 @@ function FireBaseRegister() {
         {pwMatch && <h4>{pwMatch}</h4>}
         <form onSubmit={handleSignUp}>
           <div>
-            <label>
-              Email:
-              <input
-                className='form-control'
-                required
-                name='email'
-                type='email'
-                placeholder='Email'
-              />
+            <label htmlFor='email'>
+              Email
             </label>
+            <input
+              className='form-control'
+              required
+              name='email'
+              type='email'
+              placeholder='Email'
+            />
           </div>
           <div>
-            <label>
-              Password:
-              <input
-                required
-                className='form-control'
-                name='passwordOne'
-                type='password'
-                placeholder='Password'
-                autoComplete='off'
-              />
+            <label htmlFor='passwordOne'>
+              Password
             </label>
+            <input
+              required
+              className='form-control'
+              name='passwordOne'
+              type='password'
+              placeholder='Password'
+              autoComplete='off'
+            />
           </div>
           <div>
-            <label>
-              Confirm Password:
-              <input
-                required
-                className='form-control'
-                name='passwordTwo'
-                type='password'
-                placeholder='Confirm Password'
-                autoComplete='off'
-              />
+            <label htmlFor='passwordTwo'>
+              Confirm Password
             </label>
+            <input
+              required
+              className='form-control'
+              name='passwordTwo'
+              type='password'
+              placeholder='Confirm Password'
+              autoComplete='off'
+            />
           </div>
 
-          <input type='submit' value='Register' className="btn btn-primary mt-1" /> <br />
+          <input type='submit' value='Register' className="btn btn-primary mt-4" /> <br />
         </form>
         <span className='link-msg'>Already have an account? <Link to='/signin'>Sign In</Link></span>
       </div>

@@ -25,7 +25,7 @@ function FireBaseLogin() {
       <div className='signin-form'>
         <form onSubmit={handleLogin}>
           <div>
-            <label htmlFor="email">Email Address:</label>
+            <label htmlFor="email">Email Address</label>
             <input
               id="email"
               name="email"
@@ -39,7 +39,7 @@ function FireBaseLogin() {
             />
           </div>
           <div>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Password</label>
             <input
               className="form-control"
               id="password"

@@ -29,7 +29,6 @@ const Artifact = (props) => {
 			<td>{props.description}</td>
 			<td>{props.status}</td>
 			<td>{props.acceptanceCriteria}</td>
-			<td>{props.teamName}</td>
 			<td>
 				<Link className="btn btn-link" to={editRoute}>Edit</Link>
 				{/* |
@@ -144,6 +143,7 @@ export default function View() {
 								<th>Description</th>
 								<th>Status</th>
 								<th>Acceptance Criteria</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
