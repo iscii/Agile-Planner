@@ -106,7 +106,7 @@ export default function Bug() {
           <div className="form-group">
             <input
               type="submit"
-              value="Update Bug"
+              value="Create Bug"
               className="btn btn-primary mt-4"
             />
           </div>

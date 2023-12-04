@@ -66,7 +66,7 @@ export default function ScenarioList() {
 
   // This method will map out the scenarios on the table
   function scenarioList() {
-    return scenarios.map((scenario) => {
+    const components = scenarios.map((scenario) => {
       return (
         <Scenario
           scenario={scenario}
@@ -75,6 +75,7 @@ export default function ScenarioList() {
         />
       )
     })
+    return components.reverse();
   }
 
   // This following section will display the table with the scenarios.
@@ -85,13 +86,13 @@ export default function ScenarioList() {
         <table className="table" style={{ marginTop: 20 }}>
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Acceptance Criteria</th>
-              <th>Team Name</th>
-              <th className="actions">Action</th>
-              <th className="actions">Create</th>
+              <th width="10%">Title</th>
+              <th width="25%">Description</th>
+              <th width="5%">Status</th>
+              <th width="15%">Acceptance Criteria</th>
+              <th width="10%">Team Name</th>
+              <th width="10%" className="actions">Action</th>
+              <th width="25%" className="actions">Create</th>
             </tr>
           </thead>
           <tbody>{scenarioList()}</tbody>

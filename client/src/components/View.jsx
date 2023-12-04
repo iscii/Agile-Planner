@@ -69,7 +69,7 @@ export default function View() {
 	const artifactsList = () => {
 		if (!scenario) return null // Ensure scenario is loaded
 
-		let artifacts
+		let artifacts = [<div>Artifact does not exist</div>]
 		switch (artifact) {
 			case 'US':
 				artifacts = scenario.userStories?.map((story, i) => (
@@ -92,9 +92,9 @@ export default function View() {
 				))
 				break
 			default:
-				artifacts = <div>Artifact does not exist</div>
+				artifacts = [<div>Artifact does not exist</div>]
 		}
-		return <>{artifacts}</>
+		return <>{artifacts.reverse()}</>
 	}
 
 
@@ -139,11 +139,11 @@ export default function View() {
 					<table className="table" style={{ marginTop: 20 }}>
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Description</th>
-								<th>Status</th>
-								<th>Acceptance Criteria</th>
-								<th>Action</th>
+								<th width="20%">Title</th>
+								<th width="40%">Description</th>
+								<th width="10%">Status</th>
+								<th width="20%">Acceptance Criteria</th>
+								<th width="10%">Action</th>
 							</tr>
 						</thead>
 						<tbody>

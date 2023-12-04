@@ -106,7 +106,7 @@ export default function UserStory() {
           <div className="form-group">
             <input
               type="submit"
-              value="Update User Story"
+              value="Create User Story"
               className="btn btn-primary mt-4"
             />
           </div>
